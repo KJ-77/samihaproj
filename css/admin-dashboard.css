@@ -1,0 +1,462 @@
+/* ============================================
+   ADMIN DASHBOARD LAYOUT & BASE STYLES
+   This file is ONLY for the admin dashboard.
+   It will NOT affect the user dashboard.
+   ============================================ */
+
+/* Root variables can come from style.css, 
+   but we add fallbacks just in case */
+   :root {
+    --primary-color: #8B7355;
+    --secondary-color: #d9b99b;
+    --background-light: #f7f4f1;
+    --background-medium: #f0e3d7;
+    --text-color: #333;
+    --border-color: #e0d2c2;
+  }
+  
+  /* Overall layout: sidebar + main */
+  .admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--background-light);
+    font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  
+  /* --------------------------------------------
+     SIDEBAR
+     -------------------------------------------- */
+  .admin-sidebar {
+    width: 260px;
+    background-color: var(--background-medium);
+    color: var(--text-color);
+    padding: 20px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    z-index: 100;
+  }
+  
+  .admin-sidebar h2 {
+    margin: 0 0 20px 0;
+    font-family: "Playfair Display", serif;
+    font-size: 1.4rem;
+    color: var(--primary-color);
+  }
+  
+  /* Sidebar navigation */
+  .admin-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+  }
+  
+  .admin-nav li {
+    margin-bottom: 5px;
+  }
+  
+  .admin-nav .nav-link {
+    display: block;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.1s ease;
+  }
+  
+  .admin-nav .nav-link:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateX(3px);
+  }
+  
+  .admin-nav .nav-link.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 700;
+  }
+  
+  /* Optional little footer on sidebar if needed */
+  .admin-sidebar-footer {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 10px;
+  }
+  
+  /* --------------------------------------------
+     MAIN AREA
+     -------------------------------------------- */
+  .admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  
+  /* Header bar at the top of admin */
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px 25px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+  }
+  
+  .admin-header h1 {
+    margin: 0;
+    font-family: "Playfair Display", serif;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+  }
+  
+  .admin-header > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* Logout button (class="logout" already used in HTML) */
+  .logout {
+    border: none;
+    border-radius: 20px;
+    padding: 7px 16px;
+    background-color: #d9534f;
+    color: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+  
+  .logout:hover {
+    background-color: #c9302c;
+    transform: translateY(-1px);
+  }
+  
+  /* Admin content wrapper */
+  .admin-content {
+    padding: 20px 25px 30px;
+    box-sizing: border-box;
+  }
+  
+  /* --------------------------------------------
+     SECTIONS (Dashboard, Users, Questions, ...)
+     -------------------------------------------- */
+  .admin-section {
+    display: none;
+  }
+  
+  .admin-section.active {
+    display: block;
+  }
+  
+  .section-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  
+  /* --------------------------------------------
+     STATS GRID (top small boxes)
+     -------------------------------------------- */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .stat-box {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: default;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+  }
+  
+  .stat-box h3 {
+    margin: 0 0 8px;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .stat-box .number {
+    font-family: "Playfair Display", serif;
+    font-size: 1.9rem;
+    color: var(--primary-color);
+  }
+  
+  .stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* --------------------------------------------
+     TABLES (users, questions, analytics...)
+     -------------------------------------------- */
+  .table-container {
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .table-container h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-family: "Playfair Display", serif;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+  }
+  
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .admin-table thead {
+    background-color: var(--background-medium);
+  }
+  
+  .admin-table thead th {
+    text-align: left;
+    padding: 10px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .admin-table tbody tr:nth-child(even) {
+    background-color: #faf7f3;
+  }
+  
+  .admin-table tbody tr:hover {
+    background-color: #f2e6da;
+  }
+  
+  .admin-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  /* Table tags, badges, etc. */
+  .badge-status {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .badge-status.active {
+    background-color: #dff0d8;
+    color: #3c763d;
+  }
+  
+  .badge-status.inactive {
+    background-color: #f2dede;
+    color: #a94442;
+  }
+  
+  /* Actions inside tables (edit/delete) */
+  .action-link {
+    cursor: pointer;
+    color: var(--primary-color);
+    text-decoration: underline;
+    font-size: 0.85rem;
+  }
+  
+  .action-link:hover {
+    color: #5e4631;
+  }
+  
+  /* --------------------------------------------
+     TABS INSIDE SECTIONS (Users: All / Add, etc.)
+     -------------------------------------------- */
+  .admin-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .admin-tab-btn {
+    border-radius: 20px;
+    padding: 7px 14px;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  
+  .admin-tab-btn.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    font-weight: 600;
+  }
+  
+  .admin-tab-btn:hover {
+    border-color: var(--primary-color);
+  }
+  
+  /* Tab content areas */
+  .tab-content {
+    display: none;
+  }
+  
+  .tab-content.active {
+    display: block;
+  }
+  
+  /* --------------------------------------------
+     FORMS (Create User / Question / Test / Course)
+     -------------------------------------------- */
+  .form-section {
+    background-color: #fff;
+    padding: 18px 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    max-width: 850px;
+  }
+  
+  .form-section h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-family: "Playfair Display", serif;
+    color: var(--primary-color);
+  }
+  
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    color: #555;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(139, 115, 85, 0.15);
+  }
+  
+  /* Row with 2 columns */
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  
+  /* Submit / primary button inside forms */
+  .btn-submit {
+    border: none;
+    border-radius: 20px;
+    padding: 9px 18px;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  
+  .btn-submit:hover {
+    background-color: #5e4631;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* --------------------------------------------
+     SIMPLE RESPONSIVE BEHAVIOR
+     -------------------------------------------- */
+  @media (max-width: 992px) {
+    .admin-layout {
+      flex-direction: column;
+    }
+  
+    .admin-sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      box-shadow: none;
+    }
+  
+    .admin-main {
+      width: 100%;
+    }
+  
+    .admin-header {
+      padding: 12px 15px;
+    }
+  
+    .admin-content {
+      padding: 15px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .admin-header h1 {
+      font-size: 1.4rem;
+    }
+  
+    .admin-header > div {
+      gap: 8px;
+    }
+  
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .form-section {
+      padding: 15px;
+    }
+  }
+  
