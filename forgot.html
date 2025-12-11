@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password - Samiha Zeindine Coaching</title>
+
+    <link rel="stylesheet" href="css/loginForm.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Cognito -->
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6/dist/amazon-cognito-identity.min.js"></script>
+    <script src="js/cognito-config.js"></script>
+
+    <style>
+        .small-info { color:#666; font-size:0.85rem; margin-bottom:10px; }
+        .error-msg { color:#b71c1c; margin-top:10px; font-size:0.9rem; }
+    </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header class="dashboard-header">
+    <div class="header-left">
+        <span data-i18n="appName">Samiha Zeindine Coaching</span>
+    </div>
+    <div class="header-right">
+        <a href="login.html" class="top-nav-link" data-i18n="navLogin">Login</a>
+        <select class="language-selector" id="languageSelector">
+            <option value="en">EN</option>
+            <option value="fr">FR</option>
+            <option value="ar">AR</option>
+        </select>
+    </div>
+</header>
+
+<!-- MAIN SECTION -->
+<main class="login-page">
+    <h1 class="login-title" data-i18n="resetTitle">Reset Password</h1>
+
+    <div class="login-form">
+
+        <!-- STEP 1 -->
+        <div id="step1">
+            <p class="small-info" data-i18n="resetInstruction">
+                Enter your email address and we will send you a verification code.
+            </p>
+
+            <div class="field-row">
+                <i class="fa fa-envelope" style="font-size: 20px"></i>
+                <input id="resetEmail" type="email"
+                    placeholder="Enter your email address..."
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    data-i18n-placeholder="placeholderEmail">
+            </div>
+
+            <button class="btn-auth btn-login" onclick="sendCode()" data-i18n="btnSendCode">
+                Send Verification Code
+            </button>
+
+            <p id="msg1" class="error-msg"></p>
+        </div>
+
+        <!-- STEP 2 -->
+        <div id="step2" style="display:none;">
+
+            <p class="small-info" data-i18n="resetSent">
+                We sent you a verification code. Please enter it below along with your new password.
+            </p>
+
+            <!-- CODE INPUT -->
+            <div class="field-row">
+                <i class="fa fa-key" style="font-size: 22px"></i>
+                <input id="resetCode" type="text"
+                    placeholder="Enter the code sent to your email..."
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    data-i18n-placeholder="placeholderCode">
+            </div>
+
+            <!-- NEW PASSWORD -->
+            <div class="field-row">
+                <i class="fa fa-lock" style="font-size: 22px"></i>
+                <input id="resetNewPassword" type="password"
+                    placeholder="Enter your new password..."
+                    autocomplete="new-password"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    data-i18n-placeholder="placeholderNewPassword">
+            </div>
+
+            <!-- CONFIRM NEW PASSWORD -->
+            <div class="field-row">
+                <i class="fa fa-lock" style="font-size: 22px"></i>
+                <input id="resetConfirmPassword" type="password"
+                    placeholder="Confirm your new password..."
+                    autocomplete="new-password"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    data-i18n-placeholder="placeholderConfirmPassword">
+            </div>
+
+            <button class="btn-auth btn-login" onclick="confirmPassword()" data-i18n="btnResetPassword">
+                Reset Password
+            </button>
+
+            <p id="msg2" class="error-msg"></p>
+        </div>
+    </div>
+
+    <div class="footer-note" data-i18n="footerNote">
+        © 2025 Samiha Zeindine. All rights reserved.
+    </div>
+</main>
+
+<!-- TRANSLATIONS -->
+<script>
+const translations = {
+    en: {
+        appName: "Samiha Zeindine Coaching",
+        navLogin: "Login",
+        resetTitle: "Reset Password",
+        resetInstruction: "Enter your email address and we will send you a verification code.",
+        resetSent: "A verification code has been sent. Enter it with your new password.",
+        btnSendCode: "Send Verification Code",
+        btnResetPassword: "Reset Password",
+        placeholderEmail: "Enter your email address...",
+        placeholderCode: "Enter the code sent to your email...",
+        placeholderNewPassword: "Enter your new password...",
+        placeholderConfirmPassword: "Confirm your new password...",
+        footerNote: "© 2025 Samiha Zeindine. All rights reserved."
+    },
+    fr: {
+        appName: "Coaching Samiha Zeineddine",
+        navLogin: "Connexion",
+        resetTitle: "Réinitialiser le mot de passe",
+        resetInstruction: "Entrez votre e-mail et nous vous enverrons un code de vérification.",
+        resetSent: "Un code de vérification vous a été envoyé. Entrez-le avec votre nouveau mot de passe.",
+        btnSendCode: "Envoyer le code",
+        btnResetPassword: "Réinitialiser le mot de passe",
+        placeholderEmail: "Entrez votre e-mail...",
+        placeholderCode: "Entrez le code reçu...",
+        placeholderNewPassword: "Entrez votre nouveau mot de passe...",
+        placeholderConfirmPassword: "Confirmez votre nouveau mot de passe...",
+        footerNote: "© 2025 S. Zeineddine. Tous droits réservés."
+    },
+    ar: {
+        appName: "سميحة زين الدين للتدريب",
+        navLogin: "تسجيل الدخول",
+        resetTitle: "إعادة تعيين كلمة المرور",
+        resetInstruction: "أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق.",
+        resetSent: "تم إرسال رمز التحقق. أدخله مع كلمة المرور الجديدة.",
+        btnSendCode: "إرسال رمز التحقق",
+        btnResetPassword: "إعادة تعيين كلمة المرور",
+        placeholderEmail: "أدخل بريدك الإلكتروني...",
+        placeholderCode: "أدخل رمز التحقق...",
+        placeholderNewPassword: "أدخل كلمة المرور الجديدة...",
+        placeholderConfirmPassword: "أعد إدخال كلمة المرور الجديدة...",
+        footerNote: "© 2025 سميحة زين الدين. جميع الحقوق محفوظة."
+    }
+};
+
+function applyTranslations(lang) {
+    const dict = translations[lang] || translations.en;
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        el.textContent = dict[el.getAttribute("data-i18n")];
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        el.placeholder = dict[el.getAttribute("data-i18n-placeholder")];
+    });
+
+    if (lang === "ar") {
+        document.documentElement.lang = "ar";
+        document.documentElement.dir = "rtl";
+    } else {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = "ltr";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const selector = document.getElementById("languageSelector");
+    const saved = localStorage.getItem("siteLanguage") || "en";
+
+    selector.value = saved;
+    applyTranslations(saved);
+
+    selector.addEventListener("change", () => {
+        localStorage.setItem("siteLanguage", selector.value);
+        applyTranslations(selector.value);
+    });
+});
+</script>
+
+<!-- FORGOT PASSWORD LOGIC -->
+<script>
+let globalUser = null;
+
+function sendCode() {
+    const email = document.getElementById("resetEmail").value.trim();
+    const msg = document.getElementById("msg1");
+
+    if (!email) {
+        msg.textContent = "Please enter your email.";
+        return;
+    }
+
+    globalUser = new AmazonCognitoIdentity.CognitoUser({
+        Username: email,
+        Pool: userPool
+    });
+
+    globalUser.forgotPassword({
+        onSuccess: () => {
+            document.getElementById("step1").style.display = "none";
+            document.getElementById("step2").style.display = "block";
+        },
+        onFailure: (err) => {
+            msg.textContent = err.message || JSON.stringify(err);
+        }
+    });
+}
+
+function confirmPassword() {
+    const code = document.getElementById("resetCode").value.trim();
+    const pass1 = document.getElementById("resetNewPassword").value.trim();
+    const pass2 = document.getElementById("resetConfirmPassword").value.trim();
+    const msg = document.getElementById("msg2");
+
+    if (!code || !pass1 || !pass2) {
+        msg.textContent = "All fields are required.";
+        return;
+    }
+
+    if (pass1 !== pass2) {
+        msg.textContent = "Passwords do not match.";
+        return;
+    }
+
+    globalUser.confirmPassword(code, pass1, {
+        onSuccess() {
+            alert("Password reset successful!");
+            window.location.href = "login.html";
+        },
+        onFailure(err) {
+            msg.textContent = err.message || JSON.stringify(err);
+        }
+    });
+}
+</script>
+
+</body>
+</html>
