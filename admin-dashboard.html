@@ -561,12 +561,22 @@ document.addEventListener("DOMContentLoaded", () => {
 =========================== -->
 <script>
 function switchAdminSection(e, id) {
-    document.querySelectorAll(".nav-link").forEach(n => n.classList.remove("active"));
-    e.target.classList.add("active");
+  document.querySelectorAll(".nav-link").forEach(n =>
+    n.classList.remove("active")
+  );
+  e.target.classList.add("active");
 
-    document.querySelectorAll(".admin-section").forEach(s => s.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".admin-section").forEach(s =>
+    s.classList.remove("active")
+  );
+  document.getElementById(id).classList.add("active");
+
+  // 👇 LOAD USERS WHEN USERS SECTION OPENS
+  if (id === "users") {
+    loadUsers();
+  }
 }
+
 
 function switchTab(e, id) {
   document.querySelectorAll(".admin-tab-btn").forEach(t => t.classList.remove("active"));
@@ -582,6 +592,9 @@ function adminLogout() {
   window.location.href = "login.html";
 }
 </script>
+<script src="js/admin-config.js"></script>
+<script src="js/admin-api.js"></script>
+<script src="js/admin-users.js"></script>
 
 </body>
 </html>
