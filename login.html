@@ -1,241 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Samiha Zeindine Coaching</title>
-    <link rel="stylesheet" href="css/loginForm.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Samiha Zeindine Coaching</title>
+
+  <link rel="stylesheet" href="css/loginForm.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
-    <!-- Dashboard-style header (Home + Logout + Language) -->
-    <header class="dashboard-header">
-        <div class="header-left">
-            <span data-i18n="appName">Samiha Zeindine Coaching</span>
+  <!-- HEADER -->
+  <header class="dashboard-header">
+    <div class="header-left">
+      <span>Samiha Zeindine Coaching</span>
+    </div>
+    <div class="header-right">
+      <select class="language-selector" id="languageSelector">
+        <option value="en">EN</option>
+        <option value="fr">FR</option>
+        <option value="ar">AR</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="login-page">
+    <h1 class="login-title">Login</h1>
+
+    <form id="loginForm" class="login-form">
+
+      <div class="fields">
+        <div class="field-row">
+          <i class="fa fa-envelope"></i>
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="Email..."
+            autocomplete="username"
+            required>
         </div>
-        <div class="header-right">
-            <a href="logout.html" class="top-nav-link" data-i18n="navLogout">Logout</a>
-            <select class="language-selector" id="languageSelector">
-                <option value="en">EN</option>
-                <option value="fr">FR</option>
-                <option value="ar">AR</option>
-            </select>
+
+        <div class="field-row">
+          <i class="fa fa-lock"></i>
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Password..."
+            autocomplete="current-password"
+            required>
         </div>
-    </header>
+      </div>
 
-    <main class="login-page">
-        <h1 class="login-title" data-i18n="loginTitle">Login</h1>
+      <div id="loginError" style="color:#b71c1c;font-size:0.85rem;margin-bottom:8px;"></div>
+      <div id="loginSuccess" style="color:#1b5e20;font-size:0.85rem;margin-bottom:8px;"></div>
 
-        <form id="loginForm" class="login-form">
+      <div class="form-actions">
+        <button type="submit" class="btn-auth btn-login" id="loginBtn">Login</button>
+        <a href="register.html" class="btn-auth btn-register">Register</a>
+      </div>
 
-            <div class="form1">
-                <h2 data-i18n="loginWith">Login With</h2>
-                <a class="fa fa-google-plus icons" style="font-size: 26px;" href="https://www.gmail.com/" target="_blank"></a>
+      <div class="forgot">
+        <a href="forgot.html">FORGOT PASSWORD?</a>
+      </div>
+    </form>
 
-                <div class="OR">
-                    <p data-i18n="orText">Or</p>
-                </div>
-            </div>
+    <div class="footer-note">
+      © 2025 Samiha Zeindine. All rights reserved.
+    </div>
+  </main>
+  <!-- ================================
+       REQUIRED SCRIPTS (ORDER MATTERS)
+  ================================ -->
 
-            <!-- Fields -->
-            <div class="fields">
-                <div class="field-row">
-                    <i class="fa fa-user-circle-o" style="font-size: 20px" aria-hidden="true"></i>
-                    <input
-                        id="loginUsername"
-                        type="text"
-                        name="fullname"
-                        placeholder="Username..."
-                        data-i18n-placeholder="placeholderUsername">
-                </div>
+  <!-- 1) Cognito SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6/dist/amazon-cognito-identity.min.js"></script>
 
-                <div class="field-row">
-                    <i class="fa fa-envelope" style="font-size: 20px" aria-hidden="true"></i>
-                    <input
-                        id="loginEmail"
-                        type="email"
-                        name="email"
-                        placeholder="Email..."
-                        data-i18n-placeholder="placeholderEmail"
-                        required>
-                </div>
+  <!-- 2) Your Cognito helpers (must define CognitoAuth) -->
+  <script src="js/cognito-config.js"></script>
 
-                <div class="field-row">
-                    <i class="fa fa-lock" style="font-size: 24px" aria-hidden="true"></i>
-                    <input
-                        id="loginPassword"
-                        type="password"
-                        name="password"
-                        placeholder="Password..."
-                        data-i18n-placeholder="placeholderPassword"
-                        required>
-                </div>
-            </div>
+  <!-- 3) Your API base URL -->
+  <script src="js/admin-config.js"></script>
 
-            <div id="loginError" style="color:#b71c1c; font-size:0.85rem; margin-bottom:8px;"></div>
+  <!-- 4) Optional: your admin api helpers (if you want to reuse) -->
+  <script src="js/admin-api.js"></script>
 
-            <div class="form-footer">
-                <div class="form-actions">
-                    <button type="submit" class="btn-auth btn-login" data-i18n="btnLogin">
-                        Login
-                    </button>
-                    <a href="register.html" class="btn-auth btn-register" data-i18n="btnRegister">Register</a>
-                </div>
+  <!-- ================================
+       HELPERS (DB SYNC)
+  ================================ -->
+  <script>
+    async function syncUserToDatabase(payload, fallbackEmail) {
+      // Frontend-only approach: keep it simple, no JWT header to avoid CORS preflight issues.
+      const id = payload.sub;
+      const email = payload.email || fallbackEmail;
+      const name =
+        payload.name ||
+        payload.given_name ||
+        payload["cognito:username"] ||
+        (email ? email.split("@")[0] : "User");
 
-                <div class="forgot">
-                    <a href="forgot.html" class="forgotbtn" data-i18n="forgotPassword">FORGOT PASSWORD?</a>
-                </div>
-            </div>
-        </form>
+      // If something is missing, don't crash login
+      if (!id || !email) {
+        console.warn("DB sync skipped: missing id/email", { id, email });
+        return;
+      }
 
-        <div class="footer-note" data-i18n="footerNote">
-            &copy; 2025 Samiha Zeindine. All rights reserved.
-        </div>
-    </main>
+      try {
+        const res = await fetch(`${ADMIN_ENV.API_BASE_URL}/users`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, name, email })
+        });
 
-    <!-- ============================================
-         LANGUAGE TRANSLATION SCRIPT
-    ============================================ -->
-    <script>
-        const translations = {
-            en: {
-                appName: "Samiha Zeindine Coaching",
-                navHome: "Home",
-                navLogout: "Logout",
-                loginTitle: "Login",
-                loginWith: "Login With",
-                orText: "Or",
-                placeholderUsername: "Username...",
-                placeholderEmail: "Email...",
-                placeholderPassword: "Password...",
-                btnLogin: "Login",
-                btnRegister: "Register",
-                forgotPassword: "FORGOT PASSWORD?",
-                footerNote: "© 2025 Samiha Zeindine. All rights reserved."
-            },
-            fr: {
-                appName: "Coaching Samiha Zeindine",
-                navHome: "Accueil",
-                navLogout: "Déconnexion",
-                loginTitle: "Connexion",
-                loginWith: "Se connecter avec",
-                orText: "Ou",
-                placeholderUsername: "Nom d'utilisateur...",
-                placeholderEmail: "E-mail...",
-                placeholderPassword: "Mot de passe...",
-                btnLogin: "Connexion",
-                btnRegister: "S'inscrire",
-                forgotPassword: "MOT DE PASSE OUBLIÉ ?",
-                footerNote: "© 2025 Samiha Zeindine. Tous droits réservés."
-            },
-            ar: {
-                appName: "سميحة زين الدين للتدريب",
-                navHome: "الرئيسية",
-                navLogout: "تسجيل الخروج",
-                loginTitle: "تسجيل الدخول",
-                loginWith: "تسجيل الدخول بواسطة",
-                orText: "أو",
-                placeholderUsername: "اسم المستخدم...",
-                placeholderEmail: "البريد الإلكتروني...",
-                placeholderPassword: "كلمة المرور...",
-                btnLogin: "تسجيل الدخول",
-                btnRegister: "إنشاء حساب",
-                forgotPassword: "هل نسيت كلمة المرور؟",
-                footerNote: "© ٢٠٢٥ سميحة زين الدين. جميع الحقوق محفوظة."
-            }
-        };
-
-        function applyTranslations(lang) {
-            const dict = translations[lang] || translations.en;
-
-            document.querySelectorAll("[data-i18n]").forEach(el => {
-                el.textContent = dict[el.getAttribute("data-i18n")];
-            });
-
-            document.querySelectorAll("[data-i18n-placeholder]").forEach(input => {
-                input.placeholder = dict[input.getAttribute("data-i18n-placeholder")];
-            });
-
-            if (lang === "ar") {
-                document.documentElement.lang = "ar";
-                document.documentElement.dir = "rtl";
-                document.body.classList.add("rtl");
-            } else {
-                document.documentElement.lang = lang;
-                document.documentElement.dir = "ltr";
-                document.body.classList.remove("rtl");
-            }
+        // Some APIs return 409 for duplicate; ignore it
+        if (res.status === 409) {
+          console.log("User already exists in DB (409).");
+          return;
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const selector = document.getElementById("languageSelector");
-            const savedLang = localStorage.getItem("siteLanguage") || "en";
+        if (!res.ok) {
+          const text = await res.text().catch(() => "");
+          console.warn("DB sync failed:", res.status, text);
+          return;
+        }
 
-            selector.value = savedLang;
-            applyTranslations(savedLang);
+        console.log("DB sync OK");
+      } catch (err) {
+        console.warn("DB sync exception:", err);
+      }
+    }
+  </script>
+  <!-- ================================
+       LOGIN + DB SYNC LOGIC
+  ================================ -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("loginForm");
+      const emailEl = document.getElementById("loginEmail");
+      const passEl = document.getElementById("loginPassword");
+      const errorBox = document.getElementById("loginError");
+      const successBox = document.getElementById("loginSuccess");
+      const loginBtn = document.getElementById("loginBtn");
 
-            selector.addEventListener("change", () => {
-                const lang = selector.value;
-                localStorage.setItem("siteLanguage", lang);
-                applyTranslations(lang);
-            });
-        });
-    </script>
+      if (!form) return;
 
-    <!-- Cognito SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6/dist/amazon-cognito-identity.min.js"></script>
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        errorBox.textContent = "";
+        successBox.textContent = "";
 
-    <!-- Cognito Config -->
-    <script src="js/cognito-config.js"></script>
+        const email = emailEl.value.trim();
+        const password = passEl.value;
 
-    <!-- ============================================
-         LOGIN HANDLER WITH ADMIN REDIRECT
-    ============================================ -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('loginForm');
-        const emailInput = document.getElementById('loginEmail');
-        const passwordInput = document.getElementById('loginPassword');
-        const errorBox = document.getElementById('loginError');
+        if (!email || !password) {
+          errorBox.textContent = "Please enter your email and password.";
+          return;
+        }
 
-        if (!form) return;
+        loginBtn.disabled = true;
+        loginBtn.style.opacity = "0.8";
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            errorBox.textContent = '';
+        try {
+          // 1) LOGIN WITH COGNITO
+          await CognitoAuth.cognitoSignIn(email, password);
 
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
+          // 2) GET SESSION + TOKEN PAYLOAD
+          const sessionInfo = await CognitoAuth.getCurrentSession();
+          if (!sessionInfo || !sessionInfo.session || !sessionInfo.session.isValid()) {
+            throw new Error("Login succeeded but session is not valid.");
+          }
 
-            if (!email || !password) {
-                errorBox.textContent = 'Please enter your email and password.';
-                return;
-            }
+          const payload = sessionInfo.session.getIdToken().payload;
 
-            try {
-                await CognitoAuth.cognitoSignIn(email, password);
+          // 3) SYNC USER TO DATABASE (Option A)
+          //    Do NOT block login if it fails
+          await syncUserToDatabase(payload, email);
 
-                const session = await CognitoAuth.getCurrentSession();
-                const token = session.session.getIdToken().payload;
+          // 4) REDIRECT BASED ON ROLE
+          const groups = payload["cognito:groups"] || [];
+          successBox.textContent = "Login successful. Redirecting...";
 
-                const groups = token["cognito:groups"] || [];
+          window.location.href = groups.includes("Admin")
+            ? "admin-dashboard.html"
+            : "user-dashboard.html";
 
-                // ADMIN REDIRECT LOGIC
-                if (groups.includes("Admin")) {
-                    window.location.href = "admin-dashboard.html";
-                } else {
-                    window.location.href = "user-dashboard.html";
-                }
-
-            } catch (err) {
-                console.error(err);
-                errorBox.textContent = err.message || 'Login failed. Please check your credentials.';
-            }
-        });
+        } catch (err) {
+          console.error(err);
+          errorBox.textContent = err.message || "Login failed. Please check your credentials.";
+        } finally {
+          loginBtn.disabled = false;
+          loginBtn.style.opacity = "1";
+        }
+      });
     });
-    </script>
+  </script>
 
 </body>
 </html>
