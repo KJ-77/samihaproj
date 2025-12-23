@@ -202,63 +202,30 @@
 
           </div>
         </div>
+        
       </section>
 
-      <!-- PERSONALITY TEST RESULTS -->
-      <section id="tests" class="content-section active">
-        <div class="results-header">
-          <h2 data-i18n="navTests">Personality Test Results</h2>
-          <p>Review your completed tests and insights</p>
-        </div>
+ <!-- ===========================
+     PERSONALITY TESTS
+=========================== -->
+<section id="tests" class="content-section active">
 
-        <!-- MBTI -->
-        <div class="test-result-card">
-          <h3>MBTI Test</h3>
+  <div class="results-header">
+    <h2>Personality Tests</h2>
+    <p>Select a test to view details or start it.</p>
+  </div>
 
-          <div class="result-info">
-            <div class="info-item"><strong>Test Date</strong><span>-</span></div>
-            <div class="info-item"><strong>Status</strong><span style="color:#999;">Not taken</span></div>
-            <div class="info-item"><strong>Score</strong><span>-</span></div>
-          </div>
+  <!-- Status / Loading / Error -->
+  <div
+    id="testsStatus"
+    style="margin-bottom:12px;color:#666;font-size:0.9rem;">
+  </div>
 
-          <div class="result-type">
-            <strong>Your Type:</strong>
-            <p class="result-description">Take the test to see your personality profile.</p>
-          </div>
-        </div>
+  <!-- Dynamic tests list (API-driven) -->
+  <div id="testsList" class="tests-grid"></div>
 
-        <!-- Big Five -->
-        <div class="test-result-card">
-          <h3>Big Five Personality Test</h3>
+</section>
 
-          <div class="result-info">
-            <div class="info-item"><strong>Test Date</strong><span>-</span></div>
-            <div class="info-item"><strong>Status</strong><span style="color:#999;">Not taken</span></div>
-            <div class="info-item"><strong>Score</strong><span>-</span></div>
-          </div>
-
-          <div class="result-type">
-            <strong>Your Profile Summary</strong>
-            <p class="result-description">Complete the Big Five test to see your personality dimensions.</p>
-          </div>
-        </div>
-
-        <!-- Enneagram -->
-        <div class="test-result-card">
-          <h3>Enneagram Personality Test</h3>
-
-          <div class="result-info">
-            <div class="info-item"><strong>Test Date</strong><span>-</span></div>
-            <div class="info-item"><strong>Status</strong><span style="color:#999;">Not taken</span></div>
-            <div class="info-item"><strong>Score</strong><span>-</span></div>
-          </div>
-
-          <div class="result-type">
-            <strong>Your Type:</strong>
-            <p class="result-description">Your enneagram results will appear here once you complete the test.</p>
-          </div>
-        </div>
-      </section>
       <!-- QUESTIONS FOR SAMIHA -->
       <section id="questions" class="content-section active">
         <div class="results-header">
@@ -858,6 +825,20 @@
       console.error("Dashboard init error:", err);
       window.location.href = "login.html";
     }
+  });
+  
+</script>
+
+<!-- 3) ADMIN ENV (THIS MUST COME BEFORE user-tests.js) -->
+<script src="js/admin-config.js"></script>
+
+<!-- 4) User tests logic -->
+
+<script src="js/user-tests.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadUserTests();
   });
 </script>
 
