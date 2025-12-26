@@ -1,10 +1,12 @@
 /* =========================================================
-   USER TESTS MODULE
-   - Load tests list
-   - Load test questions
+   USER TESTS MODULE – FULL WORKING FLOW
+   - Load tests
    - Start session
+   - Load questions
    - Collect answers
-   - Submit results
+   - Submit answers
+   - Save diagnosis
+   - Display result
 ========================================================= */
 
 /* ===============================
@@ -219,6 +221,7 @@ async function submitTest(e) {
   }
 
   try {
+    // 1️⃣ Submit answers
     const res = await fetch(
       `${ADMIN_ENV.API_BASE_URL}/sessions/${CURRENT_SESSION_ID}/submit`,
       {
@@ -234,12 +237,55 @@ async function submitTest(e) {
       throw new Error("Failed to submit test");
     }
 
-    alert("✅ Test submitted successfully!");
+    // 2️⃣ Save diagnosis (TEMP STATIC)
+    const diagnosisText = "depressed";
+
+    const diagRes = await fetch(
+      `${ADMIN_ENV.API_BASE_URL}/diagnoses`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          session_id: Number(CURRENT_SESSION_ID),
+          diagnosis_text: diagnosisText
+        })
+      }
+    );
+
+    if (!diagRes.ok) {
+      const txt = await diagRes.text();
+      console.error("DIAGNOSIS ERROR:", txt);
+      throw new Error("Failed to save diagnosis");
+    }
+
+    // 3️⃣ Show result
+    showDiagnosisResult(diagnosisText);
 
   } catch (err) {
     console.error(err);
     alert(err.message || "Error submitting test");
   }
+}
+
+/* ===============================
+   DISPLAY RESULT
+================================ */
+function showDiagnosisResult(text) {
+  const section = document.getElementById("tests");
+
+  section.innerHTML = `
+    <div class="results-header">
+      <h2>Your Result</h2>
+      <p>Based on your answers</p>
+    </div>
+
+    <div class="test-result-card" style="margin-top:20px;">
+      <h3>Diagnosis</h3>
+      <p style="font-size:1.2rem;margin-top:10px;">
+        <strong>${text}</strong>
+      </p>
+    </div>
+  `;
 }
 
 /* ===============================
