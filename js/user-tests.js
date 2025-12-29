@@ -1,918 +1,304 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-    <!-- Existing CSS files -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-  
-    <!-- ✅ ADD THIS STYLE BLOCK LAST -->
-    <style>
-      /* ============================
-         TESTS SECTION (INLINE FIX)
-      ============================ */
-  
-      #tests {
-        display: block;
-        width: 100%;
-      }
-  
-      #tests .tests-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 16px;
-        width: 100%;
-      }
-  
-      .test-card {
-        background: #fff;
-        border-radius: 10px;
-        padding: 16px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-  
-      .test-card h3 {
-        margin: 0 0 8px;
-        color: #8B7355;
-        font-size: 1.05rem;
-      }
-  
-      .test-meta {
-        font-size: 0.85rem;
-        color: #666;
-        margin-bottom: 10px;
-      }
-  
-      .test-actions {
-        display: flex;
-        gap: 8px;
-        margin-top: 12px;
-      }
-  
-      .test-actions button {
-        flex: 1;
-        padding: 8px;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-        font-size: 0.85rem;
-      }
-  
-      .btn-start {
-        background: #8B7355;
-        color: #fff;
-      }
-  
-      .btn-view {
-        background: #eee;
-        color: #333;
-      }
-    </style>
+/* =========================================================
+   USER TESTS MODULE – FULL WORKING FLOW
+   ========================================================= */
 
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Dashboard - Samiha Zeineddine</title>
+/* ===============================
+   SAFETY CHECK
+================================ */
+if (!window.ADMIN_ENV || !ADMIN_ENV.API_BASE_URL) {
+  console.error("ADMIN_ENV.API_BASE_URL is not defined");
+}
 
-  <!-- MAIN CSS -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/dashboard.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+/* ===============================
+   GLOBAL STATE
+================================ */
+let CURRENT_SESSION_ID = null;
+let CURRENT_TEST_ID = null;
+let CURRENT_QUESTIONS = [];
+let CURRENT_USER_ID = null;
 
-  <!-- Cognito Library -->
-  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6/dist/amazon-cognito-identity.min.js"></script>
+/* ===============================
+   LOAD TESTS LIST
+================================ */
+async function loadUserTests() {
+  const listEl = document.getElementById("testsList");
+  const statusEl = document.getElementById("testsStatus");
 
+  if (!listEl || !statusEl) return;
 
-  <!-- Extra styles for settings UI -->
-  <style>
-    .results-header {
-      margin-bottom: 20px;
+  statusEl.textContent = "Loading tests...";
+  listEl.innerHTML = "";
+
+  try {
+    const res = await fetch(`${ADMIN_ENV.API_BASE_URL}/tests`);
+    if (!res.ok) throw new Error("Failed to load tests");
+
+    const tests = await res.json();
+
+    if (!Array.isArray(tests) || tests.length === 0) {
+      statusEl.textContent = "No tests available.";
+      return;
     }
-    .results-header h2 {
-      margin: 0 0 5px 0;
-      color: var(--primary-color);
-      font-family: "Playfair Display", serif;
-    }
-    .results-header p {
-      margin: 0;
-      color: #666;
-      font-size: 0.95rem;
-    }
-    .form-group {
-      margin-bottom: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .form-group label {
-      font-size: 0.9rem;
-      color: #444;
-      font-weight: 600;
-    }
-    .form-group input {
-      padding: 8px 10px;
-      border: 1px solid var(--border-color, #ddd);
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
-    .form-group small {
-      font-size: 0.8rem;
-      color: #777;
-    }
-    .btn-save, .btn-settings {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      background-color: var(--primary-color, #8B7355);
-      color: #fff;
-      margin-top: 4px;
-    }
-    .btn-save:hover, .btn-settings:hover {
-      opacity: 0.9;
-    }
-    /* Delete modal */
-    #deleteModal {
-      display:none;
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background:rgba(0,0,0,0.4);
-      backdrop-filter:blur(3px);
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-    }
-    #deleteModal .modal-box {
-      background:white;
-      padding:25px;
-      border-radius:10px;
-      width:90%;
-      max-width:380px;
-      box-shadow:0 4px 8px rgba(0,0,0,0.15);
-      text-align:center;
-    }
-  </style>
-</head>
 
-<body>
+    statusEl.textContent = "";
 
-<!-- TOP HEADER -->
-<div class="top-header">
-  <div class="top-header-left">
-    <span class="separator">|</span>
-  </div>
+    tests.forEach(test => {
+      const card = document.createElement("div");
+      card.className = "test-card";
 
-  <div class="top-header-right">
-    <select class="language-selector" id="languageSelect">
-      <option value="en">English</option>
-      <option value="ar">العربية</option>
-      <option value="fr">Français</option>
-    </select>
+      card.innerHTML = `
+        <h3>${test.name || "Untitled Test"}</h3>
+        <p>${test.description || ""}</p>
 
-    <a href="https://facebook.com/lifecoachbysamiha" target="_blank" class="social-btn fb-btn">FB</a>
-    <a href="https://instagram.com/lifecoach.samiha" target="_blank" class="social-btn instagram-btn">IG</a>
-    <a href="#" id="logoutBtn" class="login-btn" data-i18n="logout">Logout</a>
-  </div>
-</div>
-
-<!-- LAYOUT -->
-<div class="dashboard-layout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <button class="close-sidebar-btn" id="closeSidebarBtn">×</button>
-
-      <div class="avatar" id="userAvatar">U</div>
-
-      <div class="user-info">
-        <p class="welcome-text" id="userWelcome" data-i18n="welcomeUser">Hi, User</p>
-        <p class="subtitle" data-i18n="clientPortal">Client Portal</p>
-      </div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <a href="#" class="nav-item active" data-section="dashboard" data-i18n="navDashboard">Dashboard</a>
-      <a href="#" class="nav-item" data-section="tests" data-i18n="navTests"> Personality Test Results</a>
-      <a href="#" class="nav-item" data-section="questions" data-i18n="navQuestions">Questions for Samiha</a>
-      <a href="#" class="nav-item" data-section="personalized" data-i18n="navPersonalized"> Personalized Questions</a>
-      <a href="#" class="nav-item" data-section="courses" data-i18n="navCourses">Courses & Programs</a>
-      <a href="#" class="nav-item" data-section="payments" data-i18n="navPayments"> Payments & Invoices</a>
-      <a href="#" class="nav-item" data-section="messages" data-i18n="navMessages">Messages & Notifications</a>
-      <a href="#" class="nav-item" data-section="settings" data-i18n="navSettings">Settings</a>
-    </nav>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-
-    <header class="dashboard-header">
-      <button class="hamburger-menu" id="hamburgerMenu">☰</button>
-      <h1 class="page-title" id="pageTitle" data-i18n="pageDashboard">Dashboard</h1>
-
-      <div class="header-right">
-        <a href="#" id="logoutBtnTop" class="nav-item logout-btn" data-i18n="logout">Logout</a>
-      </div>
-    </header>
-
-    <!-- CONTENT WRAPPER -->
-    <div class="content-wrapper">
-
-      <!-- DASHBOARD SECTION -->
-      <section id="dashboard" class="content-section active">
-        <div class="dashboard-container">
-          <div class="welcome-section">
-            <h1 id="welcomeUserTitle" data-i18n="welcomeTitle">Welcome!</h1>
-            <p data-i18n="welcomeSubtitle">Your personal coaching overview.</p>
-          </div>
-
-          <div class="stats-grid">
-            <div class="stat-card">
-              <h3 data-i18n="sessionsCompleted">Sessions Completed</h3>
-              <div class="number">0</div>
-            </div>
-            <div class="stat-card">
-              <h3 data-i18n="testsTaken">Tests Taken</h3>
-              <div class="number">0</div>
-            </div>
-            <div class="stat-card">
-              <h3 data-i18n="coursesProgress">Courses Progress</h3>
-              <div class="number">0%</div>
-            </div>
-            <div class="stat-card">
-              <h3 data-i18n="daysStreak">Days Streak</h3>
-              <div class="number">0</div>
-            </div>
-          </div>
-
-          <div class="quick-actions">
-            <h2 data-i18n="quickActions">Quick Actions</h2>
-            <div class="actions-grid">
-              <button class="action-btn" data-i18n="bookSession">📅 Book Session</button>
-              <button class="action-btn" data-i18n="askQuestion">❓ Ask Question</button>
-              <button class="action-btn" data-i18n="reflections">💭 Reflections</button>
-              <button class="action-btn" data-i18n="continueCourse">📚 Continue Course</button>
-            </div>
-          </div>
-
-          <div class="upcoming-sessions">
-            <h2 data-i18n="upcomingSessions">Upcoming Sessions</h2>
-
-            <div class="session-item">
-              <strong data-i18n="noSessions">No sessions scheduled</strong>
-              <p data-i18n="noSessionsDesc">You will see sessions here when booked.</p>
-            </div>
-
-          </div>
+        <div class="test-actions">
+          <button class="btn-start">Start Test</button>
         </div>
-        
-      </section>
+      `;
 
- <!-- ===========================
-     PERSONALITY TESTS
-=========================== -->
-<section id="tests" class="content-section active">
+      card.querySelector(".btn-start")
+        .addEventListener("click", () => startTest(test.id));
 
-  <div class="results-header">
-    <h2>Personality Tests</h2>
-    <p>Select a test to view details or start it.</p>
-  </div>
-
-  <!-- Status / Loading / Error -->
-  <div
-    id="testsStatus"
-    style="margin-bottom:12px;color:#666;font-size:0.9rem;">
-  </div>
-
-  <!-- Dynamic tests list (API-driven) -->
-  <div id="testsList" class="tests-grid"></div>
-
-</section>
-
-      <!-- QUESTIONS FOR SAMIHA -->
-      <section id="questions" class="content-section active">
-        <div class="results-header">
-          <h2 data-i18n="navQuestions">Questions for Samiha</h2>
-          <p>Ask your coaching questions and track responses</p>
-        </div>
-
-        <div style="background:white;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-          <textarea
-            style="width:100%;min-height:120px;padding:12px;border:1px solid #ddd;border-radius:4px;"
-            placeholder="Type your question here..."></textarea>
-
-          <button class="btn-save" style="margin-top:10px;" onclick="alert('Your question has been sent!')">
-            Submit Question
-          </button>
-        </div>
-      </section>
-
-      <!-- PERSONALIZED QUESTIONS -->
-      <section id="personalized" class="content-section active">
-        <div class="results-header">
-          <h2 data-i18n="navPersonalized">Personalized Questions</h2>
-          <p>Reflection questions tailored to your coaching journey</p>
-        </div>
-
-        <div style="background:white;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-          <h4 style="color:#8B7355;">Today's Reflection Question</h4>
-
-          <p style="color:#666;font-style:italic;">
-            "Your personalized reflection question will appear here."
-          </p>
-
-          <textarea style="width:100%;min-height:120px;padding:12px;border:1px solid #ddd;border-radius:4px;"
-            placeholder="Write your answer here..."></textarea>
-
-          <button class="btn-save" style="margin-top:10px;" onclick="alert('Reflection saved!')">Save Reflection</button>
-        </div>
-      </section>
-
-      <!-- COURSES & PROGRAMS -->
-      <section id="courses" class="content-section active">
-        <div class="results-header">
-          <h2 data-i18n="navCourses">Courses & Programs</h2>
-          <p>Browse and enroll in coaching programs</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;">
-
-          <div style="background:white;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-            <h4 style="color:#8B7355;">Self-Discovery Masterclass</h4>
-            <p style="color:#666;">8 weeks | 0% complete</p>
-            <button class="btn-save" style="width:100%;padding:8px;">Start Course</button>
-          </div>
-
-          <div style="background:white;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-            <h4 style="color:#8B7355;">Emotional Intelligence Program</h4>
-            <p style="color:#666;">6 weeks | Not started</p>
-            <button class="btn-save" style="width:100%;padding:8px;">Enroll Now</button>
-          </div>
-
-          <div style="background:white;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-            <h4 style="color:#8B7355;">Life Transformation Program</h4>
-            <p style="color:#666;">12 weeks | Not started</p>
-            <button class="btn-save" style="width:100%;padding:8px;">Enroll Now</button>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- PAYMENTS & INVOICES -->
-      <section id="payments" class="content-section active">
-        <div class="payments-header">
-          <h2 data-i18n="navPayments">Payments & Invoices</h2>
-          <p>Manage your payment history and billing</p>
-        </div>
-
-        <div class="payment-summary">
-          <div class="summary-card">
-            <h3>Total Paid</h3>
-            <div class="amount">$0</div>
-          </div>
-
-          <div class="summary-card">
-            <h3>Pending</h3>
-            <div class="amount">$0</div>
-          </div>
-
-          <div class="summary-card">
-            <h3>Next Payment</h3>
-            <div class="amount">None</div>
-          </div>
-        </div>
-
-        <div class="invoices-section">
-          <h3>Invoice History</h3>
-
-          <table class="invoice-table">
-            <thead>
-              <tr>
-                <th>Invoice #</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody id="invoiceTableBody">
-              <tr>
-                <td colspan="6" style="text-align:center;color:#666;">No invoices available</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- MESSAGES & NOTIFICATIONS -->
-      <section id="messages" class="content-section active">
-        <div class="results-header">
-          <h2 data-i18n="navMessages">Messages & Notifications</h2>
-          <p>Your communication center</p>
-        </div>
-
-        <div class="message-box" style="background:white;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-          <h3 style="color:#8B7355;">No new messages</h3>
-          <p>You will receive updates and replies from Samiha here.</p>
-        </div>
-      </section>
-
-      <!-- SETTINGS SECTION -->
-      <section id="settings" class="content-section active">
-        <div class="results-header">
-          <h2 data-i18n="navSettings">Account Settings</h2>
-          <p>Update your personal information & security</p>
-        </div>
-
-        <!-- SETTINGS CARD -->
-        <div class="settings-card" 
-             style="background:white;padding:20px;border-radius:10px;
-                    box-shadow:0 2px 8px rgba(0,0,0,0.08);max-width:600px;margin:auto;">
-
-          <!-- PROFILE INFO -->
-          <h3 style="color:#8B7355;margin-top:0;">Profile Information</h3>
-
-          <div class="form-group">
-            <label style="font-weight:bold;">Full Name</label>
-            <input id="settingsName" type="text" placeholder="Update your name" 
-                   style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
-          </div>
-
-          <div class="form-group" style="margin-top:15px;">
-            <label style="font-weight:bold;">Email Address</label>
-            <input id="settingsEmail" type="email" disabled
-                   style="width:100%;padding:10px;border:1px solid #ddd;background:#f9f9f9;border-radius:6px;">
-            <small style="color:#666;">Email editing is disabled for account security.</small>
-          </div>
-
-          <button id="saveProfileBtn"
-                  style="margin-top:20px;width:100%;padding:12px;border:none;border-radius:6px;
-                         background:#8B7355;color:white;font-size:1rem;cursor:pointer;">
-            Save Profile
-          </button>
-
-          <hr style="margin:25px 0;">
-
-          <!-- PASSWORD CHANGE -->
-          <h3 style="color:#8B7355;">Change Password</h3>
-
-          <div class="form-group">
-            <label style="font-weight:bold;">Current Password</label>
-            <input id="currentPass" type="password" placeholder="Enter current password"
-                   style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
-          </div>
-
-          <div class="form-group" style="margin-top:10px;">
-            <label style="font-weight:bold;">New Password</label>
-            <input id="newPass" type="password" placeholder="Enter new password"
-                   style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
-          </div>
-
-          <div class="form-group" style="margin-top:10px;">
-            <label style="font-weight:bold;">Confirm New Password</label>
-            <input id="confirmNewPass" type="password" placeholder="Repeat new password"
-                   style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
-          </div>
-
-          <button id="changePasswordBtn"
-                  style="margin-top:15px;width:100%;padding:12px;border:none;border-radius:6px;
-                         background:#4C6EF5;color:white;font-size:1rem;cursor:pointer;">
-            Update Password
-          </button>
-
-          <hr style="margin:25px 0;">
-
-          <!-- DELETE ACCOUNT -->
-          <h3 style="color:#B00020;">Delete Account</h3>
-          <p style="color:#555;">This action cannot be undone.</p>
-
-          <button id="deleteAccountBtn"
-                  style="margin-top:10px;width:100%;padding:12px;border:none;border-radius:6px;
-                         background:#B00020;color:white;font-size:1rem;cursor:pointer;">
-            Delete My Account
-          </button>
-
-        </div>
-      </section>
-
-    </div> <!-- end content-wrapper -->
-  </main>
-</div> <!-- end dashboard-layout -->
-
-<!-- DELETE ACCOUNT CONFIRM MODAL -->
-<div id="deleteModal">
-  <div class="modal-box">
-    <h3 style="color:#B00020;margin-top:0;">Are you sure?</h3>
-    <p style="color:#555;margin-bottom:20px;">
-      Your account will be permanently deleted and cannot be recovered.
-    </p>
-
-    <button id="confirmDeleteBtn"
-            style="width:100%;padding:12px;background:#B00020;color:white;border:none;
-                   border-radius:6px;margin-bottom:10px;font-size:1rem;cursor:pointer;">
-      Yes, delete my account
-    </button>
-
-    <button id="cancelDeleteBtn"
-            style="width:100%;padding:12px;background:#888;color:white;border:none;
-                   border-radius:6px;font-size:1rem;cursor:pointer;">
-      Cancel
-    </button>
-  </div>
-</div>
-<!-- TRANSLATION DICTIONARY + HELPER -->
-<script>
-  const dashboardTranslations = {
-    en: {
-      logout: "Logout",
-      welcomeUser: "Hi, User",
-      clientPortal: "Client Portal",
-      navDashboard: " Dashboard",
-      navTests: "Personality Test Results",
-      navQuestions: "Questions for Samiha",
-      navPersonalized: " Personalized Questions",
-      navCourses: " Courses & Programs",
-      navPayments: " Payments & Invoices",
-      navMessages: " Messages & Notifications",
-      navSettings: " Settings",
-      pageDashboard: "Dashboard",
-      welcomeTitle: "Welcome!",
-      welcomeSubtitle: "Your personal coaching overview.",
-      sessionsCompleted: "Sessions Completed",
-      testsTaken: "Tests Taken",
-      coursesProgress: "Courses Progress",
-      daysStreak: "Days Streak",
-      quickActions: "Quick Actions",
-      bookSession: " Book Session",
-      askQuestion: " Ask Question",
-      reflections: " Reflections",
-      continueCourse: " Continue Course",
-      upcomingSessions: "Upcoming Sessions",
-      noSessions: "No sessions scheduled",
-      noSessionsDesc: "You will see sessions here when booked."
-    },
-    ar: {
-      logout: "تسجيل الخروج",
-      welcomeUser: "مرحباً،",
-      clientPortal: "بوابة العميل",
-      navDashboard: " الرئيسية",
-      navTests: " نتائج اختبارات الشخصية",
-      navQuestions: " أسئلة لسميحة",
-      navPersonalized: " أسئلة مخصصة",
-      navCourses: " الدورات والبرامج",
-      navPayments: " الدفعات والفواتير",
-      navMessages: " الرسائل والإشعارات",
-      navSettings: " الإعدادات",
-      pageDashboard: "لوحة التحكم",
-      welcomeTitle: "مرحباً!",
-      welcomeSubtitle: "لمحة عامة عن تقدمك.",
-      sessionsCompleted: "الجلسات المنجزة",
-      testsTaken: "الاختبارات التي تم إجراؤها",
-      coursesProgress: "تقدم الدورات",
-      daysStreak: "عدد الأيام",
-      quickActions: "خيارات سريعة",
-      bookSession: " حجز جلسة",
-      askQuestion: " اطرح سؤالاً",
-      reflections: " التأملات",
-      continueCourse: " متابعة الدورة",
-      upcomingSessions: "الجلسات القادمة",
-      noSessions: "لا توجد جلسات",
-      noSessionsDesc: "ستظهر الجلسات هنا عند حجزها."
-    },
-    fr: {
-      logout: "Déconnexion",
-      welcomeUser: "Bonjour,",
-      clientPortal: "Portail Client",
-      navDashboard: " Tableau de bord",
-      navTests: " Résultats des tests",
-      navQuestions: " Questions pour Samiha",
-      navPersonalized: " Questions personnalisées",
-      navCourses: " Cours & Programmes",
-      navPayments: " Paiements & Factures",
-      navMessages: " Messages & Notifications",
-      navSettings: " Paramètres",
-      pageDashboard: "Tableau de bord",
-      welcomeTitle: "Bienvenue!",
-      welcomeSubtitle: "Votre aperçu personnalisé.",
-      sessionsCompleted: "Sessions terminées",
-      testsTaken: "Tests effectués",
-      coursesProgress: "Progression des cours",
-      daysStreak: "Jours consécutifs",
-      quickActions: "Actions rapides",
-      bookSession: " Réserver une session",
-      askQuestion: " Poser une question",
-      reflections: " Réflexions",
-      continueCourse: " Continuer le cours",
-      upcomingSessions: "Sessions à venir",
-      noSessions: "Aucune séance planifiée",
-      noSessionsDesc: "Les séances apparaîtront ici une fois réservées."
-    }
-  };
-
-  function applyDashboardLang(lang) {
-    const dict = dashboardTranslations[lang] || dashboardTranslations.en;
-
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-      const key = el.getAttribute("data-i18n");
-      if (dict[key]) el.textContent = dict[key];
+      listEl.appendChild(card);
     });
 
-    if (lang === "ar") {
-      document.documentElement.lang = "ar";
-      document.documentElement.dir = "rtl";
-      document.body.classList.add("rtl");
-    } else {
-      document.documentElement.lang = lang;
-      document.documentElement.dir = "ltr";
-      document.body.classList.remove("rtl");
-    }
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = "Error loading tests.";
   }
-</script>
+}
 
-<!-- MAIN DASHBOARD LOGIC -->
-<script>
-  let currentUser = null;
+/* ===============================
+   START TEST
+================================ */
+async function startTest(testId) {
+  try {
+    const sessionInfo = await CognitoAuth.getCurrentSession();
+    if (!sessionInfo || !sessionInfo.session || !sessionInfo.session.isValid()) {
+      alert("Please login again.");
+      return;
+    }
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      // 1️⃣ AUTH CHECK (USING COGNITOAUTH HELPER)
-      if (!window.CognitoAuth || !CognitoAuth.getCurrentSession) {
-        console.error("CognitoAuth helper not available.");
-        window.location.href = "login.html";
-        return;
-      }
+    const payload = sessionInfo.session.getIdToken().payload;
+    CURRENT_USER_ID = payload.sub;
+    CURRENT_TEST_ID = testId;
 
-      const info = await CognitoAuth.getCurrentSession();
-      if (!info || !info.session || !info.session.isValid()) {
-        window.location.href = "login.html";
-        return;
-      }
+    // 1️⃣ Create backend session
+    const sessionRes = await fetch(`${ADMIN_ENV.API_BASE_URL}/sessions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: CURRENT_USER_ID,
+        test_id: testId
+      })
+    });
 
-      currentUser = info.user;
-      const idToken = info.session.getIdToken().payload;
-      const groups = idToken["cognito:groups"] || [];
+    if (!sessionRes.ok) {
+      const txt = await sessionRes.text();
+      throw new Error(txt || "Failed to start session");
+    }
 
-      // Redirect admins to admin dashboard
-      if (groups.includes("Admin")) {
-        window.location.href = "admin-dashboard.html";
-        return;
-      }
+    const sessionData = await sessionRes.json();
+    CURRENT_SESSION_ID =
+      sessionData.id ||
+      sessionData.session_id ||
+      sessionData.session?.id;
 
-      // 2️⃣ LOAD USER ATTRIBUTES (NAME / EMAIL / AVATAR)
-      currentUser.getUserAttributes((err, attrs) => {
-        if (err) {
-          console.error("getUserAttributes error:", err);
-          return;
-        }
+    if (!CURRENT_SESSION_ID) {
+      throw new Error("Session ID not returned from backend");
+    }
 
-        let name = "";
-        let email = "";
+    // 2️⃣ Load questions
+    const testRes = await fetch(`${ADMIN_ENV.API_BASE_URL}/tests/${testId}`);
+    if (!testRes.ok) throw new Error("Failed to load test questions");
 
-        attrs.forEach(a => {
-          if (a.getName() === "name") name = a.getValue();
-          if (a.getName() === "email") email = a.getValue();
-        });
+    CURRENT_QUESTIONS = await testRes.json();
 
-        if (!name && email) name = email.split("@")[0];
+    if (!Array.isArray(CURRENT_QUESTIONS)) {
+      throw new Error("Invalid questions format");
+    }
 
-        // Fill UI
-        if (name) {
-          const welcome1 = document.getElementById("userWelcome");
-          const welcome2 = document.getElementById("welcomeUserTitle");
-          if (welcome1) welcome1.textContent = "Hi, " + name;
-          if (welcome2) welcome2.textContent = "Welcome, " + name;
-          const nameField = document.getElementById("settingsName");
-          if (nameField) nameField.value = name;
-        }
+    renderTestQuestions(CURRENT_QUESTIONS);
 
-        if (email) {
-          const emailField = document.getElementById("settingsEmail");
-          if (emailField) emailField.value = email;
-        }
+  } catch (err) {
+    console.error(err);
+    alert(err.message || "Error starting test");
+  }
+}
 
-        const initials = (name || "U")
-          .split(" ")
-          .filter(Boolean)
-          .map(x => x[0])
-          .join("")
-          .toUpperCase()
-          .slice(0, 2);
+/* ===============================
+   RENDER QUESTIONS
+================================ */
+function renderTestQuestions(questions) {
+  const section = document.getElementById("tests");
 
-        const avatar = document.getElementById("userAvatar");
-        if (avatar) avatar.textContent = initials;
-      });
+  section.innerHTML = `
+    <div class="results-header">
+      <h2>${questions[0]?.name || "Test"}</h2>
+      <p>${questions[0]?.description || ""}</p>
+    </div>
 
-      // 3️⃣ SIDEBAR NAVIGATION (TABS)
-      const navItems = document.querySelectorAll(".nav-item");
-      const sections = document.querySelectorAll(".content-section");
+    <form id="testForm">
+      <div id="questionsContainer"></div>
 
-      navItems.forEach(item => {
-        item.addEventListener("click", (e) => {
-          e.preventDefault();
-          const targetId = item.getAttribute("data-section");
-          if (!targetId) return;
+      <button type="submit" class="btn-start" style="margin-top:20px;">
+        Submit Test
+      </button>
+    </form>
+  `;
 
-          navItems.forEach(n => n.classList.remove("active"));
-          item.classList.add("active");
+  const container = document.getElementById("questionsContainer");
 
-          sections.forEach(sec => sec.classList.add("hidden"));
-          const targetSection = document.getElementById(targetId);
-          if (targetSection) targetSection.classList.remove("hidden");
+  questions.forEach((q, index) => {
+    const block = document.createElement("div");
+    block.className = "question-block";
 
-          const pageTitle = document.getElementById("pageTitle");
-          if (pageTitle) pageTitle.textContent = item.textContent.trim();
-        });
-      });
+    block.innerHTML = `
+      <h4>${index + 1}. ${q.question}</h4>
 
-      // 4️⃣ HAMBURGER + CLOSE SIDEBAR (MOBILE)
-      const sidebar = document.querySelector(".sidebar");
-      const hamburger = document.getElementById("hamburgerMenu");
-      const closeSidebarBtn = document.getElementById("closeSidebarBtn");
+      ${Object.entries(q.choices).map(([key, text]) => `
+        <label style="display:block;margin:6px 0;">
+          <input
+            type="radio"
+            name="question_${q.id}"
+            value="${key}"
+            data-text="${text}">
+          ${key.toUpperCase()}. ${text}
+        </label>
+      `).join("")}
+    `;
 
-      if (hamburger && sidebar) {
-        hamburger.addEventListener("click", () => {
-          sidebar.classList.add("open");
-        });
-      }
-      if (closeSidebarBtn && sidebar) {
-        closeSidebarBtn.addEventListener("click", () => {
-          sidebar.classList.remove("open");
-        });
-      }
+    container.appendChild(block);
+  });
 
-      // 5️⃣ SAVE PROFILE (UPDATE NAME IN COGNITO)
-      const saveProfileBtn = document.getElementById("saveProfileBtn");
-      if (saveProfileBtn) {
-        saveProfileBtn.addEventListener("click", () => {
-          if (!currentUser) {
-            alert("User is not authenticated.");
-            return;
-          }
+  document
+    .getElementById("testForm")
+    .addEventListener("submit", submitTest);
+}
 
-          const newName = document.getElementById("settingsName").value.trim();
-          if (newName.length < 2) {
-            alert("Name must be at least 2 characters.");
-            return;
-          }
+/* ===============================
+   SUBMIT TEST
+================================ */
+async function submitTest(e) {
+  e.preventDefault();
 
-          const attribute = new AmazonCognitoIdentity.CognitoUserAttribute({
-            Name: "name",
-            Value: newName
-          });
+  if (!CURRENT_SESSION_ID) {
+    alert("Session expired. Please restart the test.");
+    return;
+  }
 
-          currentUser.updateAttributes([attribute], (err, result) => {
-            if (err) {
-              alert("Error updating name: " + err.message);
-              return;
-            }
-            alert("Profile updated successfully!");
-            // Update welcome text & avatar without full reload
-            const welcome1 = document.getElementById("userWelcome");
-            const welcome2 = document.getElementById("welcomeUserTitle");
-            if (welcome1) welcome1.textContent = "Hi, " + newName;
-            if (welcome2) welcome2.textContent = "Welcome, " + newName;
-            const initials = newName.split(" ").filter(Boolean).map(x => x[0]).join("").toUpperCase().slice(0,2);
-            const avatar = document.getElementById("userAvatar");
-            if (avatar) avatar.textContent = initials;
-          });
-        });
-      }
+  const answers = {};
 
-      // 6️⃣ CHANGE PASSWORD
-      const changePasswordBtn = document.getElementById("changePasswordBtn");
-      if (changePasswordBtn) {
-        changePasswordBtn.addEventListener("click", () => {
-          if (!currentUser) {
-            alert("User is not authenticated.");
-            return;
-          }
+  CURRENT_QUESTIONS.forEach(q => {
+    const selected = document.querySelector(
+      `input[name="question_${q.id}"]:checked`
+    );
 
-          const oldPass = document.getElementById("currentPass").value;
-          const newPass = document.getElementById("newPass").value;
-          const confirm = document.getElementById("confirmNewPass").value;
-
-          if (!oldPass || !newPass || !confirm) {
-            alert("Please fill all password fields.");
-            return;
-          }
-          if (newPass !== confirm) {
-            alert("New passwords do not match.");
-            return;
-          }
-
-          currentUser.changePassword(oldPass, newPass, (err, success) => {
-            if (err) {
-              alert("Error updating password: " + err.message);
-              return;
-            }
-            alert("Password updated successfully!");
-            document.getElementById("currentPass").value = "";
-            document.getElementById("newPass").value = "";
-            document.getElementById("confirmNewPass").value = "";
-          });
-        });
-      }
-
-      // 7️⃣ DELETE ACCOUNT (MODAL + DELETE)
-      const deleteModal = document.getElementById("deleteModal");
-      const deleteAccountBtn = document.getElementById("deleteAccountBtn");
-      const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
-      const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-
-      if (deleteAccountBtn && deleteModal) {
-        deleteAccountBtn.addEventListener("click", () => {
-          deleteModal.style.display = "flex";
-        });
-      }
-      if (cancelDeleteBtn && deleteModal) {
-        cancelDeleteBtn.addEventListener("click", () => {
-          deleteModal.style.display = "none";
-        });
-      }
-      if (confirmDeleteBtn && deleteModal) {
-        confirmDeleteBtn.addEventListener("click", () => {
-          if (!currentUser) {
-            alert("User is not authenticated.");
-            return;
-          }
-
-          currentUser.deleteUser((err, result) => {
-            if (err) {
-              alert("Failed to delete account: " + err.message);
-              return;
-            }
-            alert("Your account has been deleted.");
-            window.location.href = "register.html";
-          });
-        });
-      }
-
-      // 8️⃣ LANGUAGE SYSTEM
-      const langSelect = document.getElementById("languageSelect");
-      if (langSelect) {
-        const savedLang = localStorage.getItem("dashboardLang") || "en";
-        langSelect.value = savedLang;
-        applyDashboardLang(savedLang);
-
-        langSelect.addEventListener("change", () => {
-          const lang = langSelect.value;
-          localStorage.setItem("dashboardLang", lang);
-          applyDashboardLang(lang);
-        });
-      }
-
-      // 9️⃣ LOGOUT BUTTONS
-      const logoutBtn = document.getElementById("logoutBtn");
-      const logoutBtnTop = document.getElementById("logoutBtnTop");
-
-      function performLogout() {
-        if (currentUser) currentUser.signOut();
-        if (window.CognitoAuth && CognitoAuth.cognitoSignOut) {
-          try { CognitoAuth.cognitoSignOut(); } catch(e) {}
-        }
-        window.location.href = "login.html";
-      }
-
-      if (logoutBtn) logoutBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        performLogout();
-      });
-      if (logoutBtnTop) logoutBtnTop.addEventListener("click", (e) => {
-        e.preventDefault();
-        performLogout();
-      });
-
-    } catch (err) {
-      console.error("Dashboard init error:", err);
-      window.location.href = "login.html";
+    if (selected) {
+      answers[q.id] = {
+        index: selected.value,
+        text: selected.dataset.text,
+        question: q.question
+      };
     }
   });
-  
-</script>
-<!-- CONFIG (must come first) -->
-<script src="js/admin-config.js"></script>
 
-<!-- Cognito helpers -->
-<script src="js/cognito-config.js"></script>
+  if (Object.keys(answers).length !== CURRENT_QUESTIONS.length) {
+    alert("Please answer all questions.");
+    return;
+  }
 
-<!-- User tests logic -->
-<script src="js/user-tests.js"></script>
+  try {
+    const submitRes = await fetch(
+      `${ADMIN_ENV.API_BASE_URL}/sessions/${CURRENT_SESSION_ID}/submit`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ answers })
+      }
+    );
 
+    if (!submitRes.ok) {
+      const txt = await submitRes.text();
+      throw new Error(txt || "Submit failed");
+    }
 
+    // 2️⃣ Load diagnosis created by backend
+    await loadLatestDiagnosis(CURRENT_USER_ID);
 
+  } catch (err) {
+    console.error(err);
+    alert(err.message || "Error submitting test");
+  }
+}
 
-</body>
-</html>
+/* ===============================
+   LOAD LATEST DIAGNOSIS
+================================ */
+async function loadLatestDiagnosis(userId) {
+  try {
+    const res = await fetch(
+      `${ADMIN_ENV.API_BASE_URL}/diagnoses/${userId}`
+    );
+
+    if (!res.ok) throw new Error("Failed to load diagnoses");
+
+    const data = await res.json();
+
+    if (
+      !data.diagnoses ||
+      !Array.isArray(data.diagnoses) ||
+      data.diagnoses.length === 0
+    ) {
+      showDiagnosisResult("No diagnosis available");
+      return;
+    }
+
+    const latest = data.diagnoses[0];
+
+    showDiagnosisResult(
+      latest.diagnosis_text,
+      latest.test_name,
+      latest.test_completed_at
+    );
+
+  } catch (err) {
+    console.error(err);
+    showDiagnosisResult("No diagnosis available");
+  }
+}
+
+/* ===============================
+   DISPLAY RESULT
+================================ */
+function showDiagnosisResult(text, testName = "", completedAt = "") {
+  const section = document.getElementById("tests");
+
+  const dateStr = completedAt
+    ? new Date(completedAt).toLocaleString()
+    : "";
+
+  section.innerHTML = `
+    <div class="results-header">
+      <h2>Your Result</h2>
+      <p>Based on your most recent test</p>
+    </div>
+
+    <div class="test-result-card" style="margin-top:20px;">
+      <h3>${testName || "Diagnosis"}</h3>
+
+      <p style="font-size:1.1rem;margin-top:10px;">
+        <strong>${text}</strong>
+      </p>
+
+      ${dateStr ? `
+        <p style="color:#777;margin-top:8px;">
+          Completed on ${dateStr}
+        </p>` : ""}
+    </div>
+  `;
+}
+
+/* ===============================
+   AUTO LOAD
+================================ */
+document.addEventListener("DOMContentLoaded", loadUserTests);
