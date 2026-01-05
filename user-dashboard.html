@@ -87,8 +87,7 @@
 
   <!-- Cognito Library -->
   <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6/dist/amazon-cognito-identity.min.js"></script>
-  <!-- Your Cognito helper config -->
-  <script src="js/cognito-config.js"></script>
+
 
   <!-- Extra styles for settings UI -->
   <style>
@@ -304,7 +303,7 @@
       <!-- QUESTIONS FOR SAMIHA -->
       <section id="questions" class="content-section active">
         <div class="results-header">
-          <h2 data-i18n="navQuestions">Questions for Samiha</h2>
+          <h2 data-i18n="navQuestions">Questions from Samiha</h2>
           <p>Ask your coaching questions and track responses</p>
         </div>
 
@@ -333,11 +332,25 @@
             "Your personalized reflection question will appear here."
           </p>
 
-          <textarea style="width:100%;min-height:120px;padding:12px;border:1px solid #ddd;border-radius:4px;"
-            placeholder="Write your answer here..."></textarea>
-
-          <button class="btn-save" style="margin-top:10px;" onclick="alert('Reflection saved!')">Save Reflection</button>
+          <textarea
+          id="dashboardSamihaQuestion"
+          maxlength="700"
+          style="width:100%;min-height:120px;padding:12px;border:1px solid #ddd;border-radius:4px;"
+          placeholder="Write your question to Samiha (max 700 characters)..."></textarea>
+        
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+          <small id="dashboardCharCount" style="color:#777;">0 / 700</small>
         </div>
+        
+        <button
+          class="btn-save"
+          style="margin-top:10px;"
+          onclick="submitDashboardSamihaQuestion()">
+          Send to Samiha
+        </button>
+        
+        <p id="dashboardSamihaStatus" style="margin-top:8px;font-size:13px;color:#666;"></p>
+        
       </section>
 
       <!-- COURSES & PROGRAMS -->
@@ -903,13 +916,19 @@
   });
   
 </script>
-
-<!-- 3) ADMIN ENV (THIS MUST COME BEFORE user-tests.js) -->
+<!-- CONFIG (must come first) -->
 <script src="js/admin-config.js"></script>
 
-<!-- 4) User tests logic -->
+<!-- Cognito helpers -->
+<script src="js/cognito-config.js"></script>
 
+<!-- User tests logic -->
 <script src="js/user-tests.js"></script>
+<script src="js/dashboard-samiha.js"></script>
+
+
+
+
 
 </body>
 </html>
