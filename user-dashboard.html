@@ -204,9 +204,9 @@
 
     <nav class="sidebar-nav">
       <a href="#" class="nav-item active" data-section="dashboard" data-i18n="navDashboard">Dashboard</a>
-      <a href="#" class="nav-item" data-section="tests" data-i18n="navTests"> Personality Test Results</a>
-      <a href="#" class="nav-item" data-section="questions" data-i18n="navQuestions">Questions for Samiha</a>
-      <a href="#" class="nav-item" data-section="personalized" data-i18n="navPersonalized"> Personalized Questions</a>
+      <a href="#" class="nav-item" data-section="tests" data-i18n="navTests"> Personality Tests and Results</a>
+      <a href="#" class="nav-item" data-section="questions" data-i18n="navQuestions">paid ready questions from samiha</a>
+      <a href="#" class="nav-item" data-section="personalized" data-i18n="navPersonalized"> your Personalized Questions</a>
       <a href="#" class="nav-item" data-section="courses" data-i18n="navCourses">Courses & Programs</a>
       <a href="#" class="nav-item" data-section="payments" data-i18n="navPayments"> Payments & Invoices</a>
       <a href="#" class="nav-item" data-section="messages" data-i18n="navMessages">Messages & Notifications</a>
@@ -303,24 +303,57 @@
   <div id="testsList" class="tests-grid"></div>
 
 </section>
+<!-- QUESTIONS FOR SAMIHA -->
+<section id="questions" class="content-section active">
+  <div class="results-header">
+    <h2 data-i18n="navQuestions">Questions</h2>
+    <p>All your questions answered</p>
+  </div>
 
-      <!-- QUESTIONS FOR SAMIHA -->
-      <section id="questions" class="content-section active">
-        <div class="results-header">
-          <h2 data-i18n="navQuestions">Questions from Samiha</h2>
-          <p>Ask your coaching questions and track responses</p>
-        </div>
+  <div id="personalizedQuestionsWrap" style="background:white;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+      <h4 style="margin:0;color:#8B7355;">Your Q&A Library</h4>
+      <button id="reloadPersonalizedBtn"
+              style="border:none;background:#eee;padding:8px 12px;border-radius:8px;cursor:pointer;">
+        Refresh
+      </button>
+    </div>
 
-        <div style="background:white;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-          <textarea
-            style="width:100%;min-height:120px;padding:12px;border:1px solid #ddd;border-radius:4px;"
-            placeholder="Type your question here..."></textarea>
+    <p id="personalizedQuestionsStatus" style="margin:10px 0 0;color:#666;">Loading...</p>
 
-          <button class="btn-save" style="margin-top:10px;" onclick="alert('Your question has been sent!')">
-            Submit Question
-          </button>
-        </div>
-      </section>
+    <div id="personalizedQuestionsList"
+         style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
+      <!-- cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+   VIEW ANSWER MODAL
+========================= -->
+<div id="viewAnswerModal"
+     style="position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px;">
+  <div style="width:min(720px,100%);background:#fff;border-radius:14px;padding:16px 16px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.18);">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <h2 style="margin:0;color:#8B7355;">Answer</h2>
+      <button id="closeViewAnswerModalBtn"
+              aria-label="Close"
+              style="border:none;background:transparent;font-size:20px;cursor:pointer;padding:6px 10px;border-radius:10px;">
+        ✕
+      </button>
+    </div>
+
+    <p id="viewAnswerQuestionText" style="margin:10px 0 8px;color:#333;font-weight:600;"></p>
+
+    <div id="viewAnswerBody"
+         style="border:1px solid #eee;border-radius:12px;padding:12px;background:#faf7f3;color:#333;line-height:1.55;min-height:80px;">
+      <!-- answer injected -->
+    </div>
+
+    <p id="viewAnswerHint" style="margin:10px 0 0;color:#777;font-size:13px;"></p>
+  </div>
+</div>
+
 
       <!-- PERSONALIZED QUESTIONS -->
       <section id="personalized" class="content-section active">
@@ -559,9 +592,9 @@
       welcomeUser: "Hi, User",
       clientPortal: "Client Portal",
       navDashboard: " Dashboard",
-      navTests: "Personality Test Results",
-      navQuestions: "Questions for Samiha",
-      navPersonalized: " Personalized Questions",
+      navTests: "Personality Tests and Results",
+      navQuestions: "Paid questions and ready ansers",
+      navPersonalized: " Personalized Questions for samiha",
       navCourses: " Courses & Programs",
       navPayments: " Payments & Invoices",
       navMessages: " Messages & Notifications",
@@ -926,9 +959,14 @@
 
 <!-- Cognito helpers -->
 <script src="js/cognito-config.js"></script>
+<!-- ready questions -->
+
+<script src="js/personalized-questions.js"></script>
+
 
 <!-- User tests logic -->
 <script src="js/user-tests.js"></script>
+
 <script src="js/dashboard-samiha.js"></script>
 
 
