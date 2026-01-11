@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             welcomeDateElement.textContent = today;
         }
     }
-
+    
     // Update date on load
     updateDate();
 
@@ -146,3 +146,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// ✅ Universal navigation (works with your .hidden/.active system + mobile sidebar)
+window.showDashboardSection = function (sectionId) {
+    const sidebar = document.querySelector(".sidebar");
+    const navItems = document.querySelectorAll(".sidebar-nav .nav-item");
+    const contentSections = document.querySelectorAll(".content-sections .content-section");
+  
+    // 1) Switch sections using the SAME logic your sidebar uses
+    contentSections.forEach(section => {
+      if (section.id === sectionId) {
+        section.classList.add("active");
+        section.classList.remove("hidden");
+      } else {
+        section.classList.remove("active");
+        section.classList.add("hidden");
+      }
+    });
+  
+    // 2) Update sidebar active state (optional but nice)
+    navItems.forEach(item => {
+      const target = item.getAttribute("data-section");
+      item.classList.toggle("active", target === sectionId);
+    });
+  
+    // 3) Close sidebar on mobile
+    if (window.innerWidth <= 992 && sidebar) {
+      sidebar.classList.remove("open");
+    }
+  
+    // 4) Smooth scroll to the section
+    const targetEl = document.getElementById(sectionId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
