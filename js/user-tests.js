@@ -442,11 +442,13 @@ function showDiagnosisResult(latestObj) {
            style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:#8B7355;color:#fff;padding:10px 14px;border-radius:10px;font-weight:600;">
           📅 Book a session with Samiha
         </a>
-
-        <a href="#questions"
-           style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:#eee;color:#333;padding:10px 14px;border-radius:10px;font-weight:600;">
-          ❓ Ask Samiha a question
-        </a>
+  <a href="#"
+          onclick="
+            document.querySelector('.nav-item[data-section=&quot;questions&quot;]')?.click();
+          "
+          style="color:#555;text-decoration:underline;">
+         ❓ Ask Samiha
+       </a>
       </div>
     </div>
   `;
@@ -705,3 +707,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadAllDiagnoses(userId);
   }
 });
+
