@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -231,62 +230,51 @@
     </header>
 
     <!-- CONTENT WRAPPER -->
-    <div class="content-wrapper">
+    <div class="content-wrapper content-sections">
 
       <!-- DASHBOARD SECTION -->
       <section id="dashboard" class="content-section active">
-        <div class="dashboard-container">
-          <div class="welcome-section">
-            <h1 id="welcomeUserTitle" data-i18n="welcomeTitle">Welcome!</h1>
-            <p data-i18n="welcomeSubtitle">Your personal coaching overview.</p>
-          </div>
 
-          <div class="stats-grid">
-            <div class="stat-card">
-              <h3 data-i18n="sessionsCompleted">Sessions Completed</h3>
-              <div class="number">0</div>
-            </div>
-            <div class="stat-card">
-              <h3 data-i18n="testsTaken">Tests Taken</h3>
-              <div class="number">0</div>
-            </div>
-            <div class="stat-card">
-              <h3 data-i18n="coursesProgress">Courses Progress</h3>
-              <div class="number">0%</div>
-            </div>
-            <div class="stat-card">
-              <h3 data-i18n="daysStreak">Days Streak</h3>
-              <div class="number">0</div>
-            </div>
-          </div>
-
-          <div class="quick-actions">
-            <h2 data-i18n="quickActions">Quick Actions</h2>
-            <div class="actions-grid">
-              <button class="action-btn" data-i18n="bookSession">📅 Book Session</button>
-              <button class="action-btn" data-i18n="askQuestion">❓ Ask Question</button>
-              <button class="action-btn" data-i18n="reflections">💭 Reflections</button>
-              <button class="action-btn" data-i18n="continueCourse">📚 Continue Course</button>
-            </div>
-          </div>
-
-          <div class="upcoming-sessions">
-            <h2 data-i18n="upcomingSessions">Upcoming Sessions</h2>
-
-            <div class="session-item">
-              <strong data-i18n="noSessions">No sessions scheduled</strong>
-              <p data-i18n="noSessionsDesc">You will see sessions here when booked.</p>
-            </div>
-
-          </div>
+        <!-- WELCOME -->
+        <div class="dashboard-welcome">
+      
+          <h1 id="welcomeUserTitle" class="welcome-title">
+            Hi,
+          </h1>
+      
+          <p class="welcome-subtitle">
+            Welcome to your personal coaching space with Samiha.
+          </p>
+      
+          <div class="welcome-divider"></div>
+      
+          <p class="welcome-text">
+            This is a private and secure environment designed to support your
+            self-awareness, clarity, and personal growth journey.
+            <br><br>
+            Use the menu on the left to access your tests, reflections, courses,
+            questions, and account settings at your own pace.
+          </p>
+      
         </div>
-        
+      
+        <!-- COACH MESSAGE -->
+        <div class="coach-message-card">
+          <p class="coach-message">
+            “Coaching is not about fixing what is broken, but about discovering
+            what is already within you.”
+          </p>
+        </div>
+      
       </section>
+      
+        
+      
 
  <!-- ===========================
      PERSONALITY TESTS
 =========================== -->
-<section id="tests" class="content-section active">
+<section id="tests" class="content-section hidden">
 
   <div class="results-header">
     <h2>Personality Tests</h2>
@@ -304,7 +292,7 @@
 
 </section>
 <!-- QUESTIONS FOR SAMIHA -->
-<section id="questions" class="content-section active">
+<section id="questions" class="content-section hidden">
   <div class="results-header">
     <h2 data-i18n="navQuestions">Questions</h2>
     <p>All your questions answered</p>
@@ -356,7 +344,7 @@
 
 
       <!-- PERSONALIZED QUESTIONS -->
-      <section id="personalized" class="content-section active">
+      <section id="personalized" class="content-section hidden">
         <div class="results-header">
           <h2 data-i18n="navPersonalized">Personalized Questions</h2>
           <p>Reflection questions tailored to your coaching journey</p>
@@ -391,7 +379,7 @@
       </section>
 
       <!-- COURSES & PROGRAMS -->
-      <section id="courses" class="content-section active">
+      <section id="courses" class="content-section hidden">
         <div class="results-header">
           <h2 data-i18n="navCourses">Courses & Programs</h2>
           <p>Browse and enroll in coaching programs</p>
@@ -421,7 +409,7 @@
       </section>
 
       <!-- PAYMENTS & INVOICES -->
-      <section id="payments" class="content-section active">
+      <section id="payments" class="content-section hidden">
         <div class="payments-header">
           <h2 data-i18n="navPayments">Payments & Invoices</h2>
           <p>Manage your payment history and billing</p>
@@ -469,7 +457,7 @@
       </section>
 
       <!-- MESSAGES & NOTIFICATIONS -->
-      <section class="content-section active" id="messages" >
+      <section class="content-section hidden" id="messages" >
 
       <div id="userSamihaQABox" style="background:white;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
@@ -508,7 +496,7 @@
       </section>
 
       <!-- SETTINGS SECTION -->
-      <section id="settings" class="content-section active">
+      <section id="settings" class="content-section hidden">
         <div class="results-header">
           <h2 data-i18n="navSettings">Account Settings</h2>
           <p>Update your personal information & security</p>
