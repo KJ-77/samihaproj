@@ -104,44 +104,41 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       <!-- DASHBOARD SECTION -->
       <section id="dashboard" class="admin-section active">
-        <h2 class="section-title" data-i18n="dashboardOverview">Dashboard Overview</h2>
 
-        <div class="stats-grid">
-          <div class="stat-box">
-            <h3 data-i18n="totalUsers">Total Users</h3>
-            <div class="number">0</div>
-          </div>
-          <div class="stat-box">
-            <h3 data-i18n="activeSessions">Active Sessions</h3>
-            <div class="number">0</div>
-          </div>
-          <div class="stat-box">
-            <h3 data-i18n="pendingQuestions">Pending Questions</h3>
-            <div class="number">0</div>
-          </div>
-          <div class="stat-box">
-            <h3 data-i18n="totalRevenue">Total Revenue</h3>
-            <div class="number">$0</div>
-          </div>
+        <!-- ADMIN WELCOME -->
+        <div class="admin-welcome">
+      
+          <h1 class="admin-title">
+            Welcome back, Samiha
+          </h1>
+      
+          <p class="admin-subtitle">
+            This is your administrative workspace.
+          </p>
+      
+          <div class="admin-divider"></div>
+      
+          <p class="admin-text">
+            From here, you can manage users, review questions, oversee tests,
+            monitor platform activity, and maintain full control over the coaching
+            experience offered on this platform.
+            <br><br>
+            Use the navigation panel to access specific tools and sections.
+            All actions performed here directly impact the user experience.
+          </p>
+      
         </div>
-
-        <div class="table-container">
-          <h3 data-i18n="recentActivity">Recent Activity</h3>
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Activity</th>
-                <th>Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="recentActivityBody"></tbody>
-          </table>
+      
+        <!-- ADMIN NOTE -->
+        <div class="admin-note-card">
+          <p class="admin-note">
+            This area is restricted to administrators only.
+            Please review information carefully before making changes.
+          </p>
         </div>
-
+      
       </section>
-
+      
 
       <!-- USERS SECTION -->
       <section id="users" class="admin-section">
@@ -149,7 +146,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         <div class="admin-tabs">
           <button class="admin-tab-btn active" onclick="switchTab(event, 'users-list')" data-i18n="allUsers">All Users</button>
-          <button class="admin-tab-btn" onclick="switchTab(event, 'add-user')" data-i18n="addUser">Add User</button>
         </div>
 
         <div id="users-list" class="tab-content active">
@@ -166,30 +162,6 @@ document.addEventListener("DOMContentLoaded", async () => {
               </thead>
               <tbody id="usersTableBody"></tbody>
             </table>
-          </div>
-        </div>
-
-        <div id="add-user" class="tab-content">
-          <div class="form-section">
-            <h3 data-i18n="createNewUser">Create New User</h3>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" placeholder="Full Name">
-              </div>
-              <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" placeholder="user@example.com">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" placeholder="Set password">
-            </div>
-
-            <button class="btn-submit" onclick="alert('User creation API coming soon')">Add User</button>
           </div>
         </div>
 
@@ -223,6 +195,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             <thead>
               <tr>
                 <th>User ID</th>
+                <th>test ID</th>
                 <th>Test Name</th>
                 <th>Diagnosis</th>
                 <th>Completed At</th>
