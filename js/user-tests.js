@@ -499,7 +499,7 @@ function showDiagnosisResult(d) {
 
       <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
         <a href="${whatsappLink()}" target="_blank" style="${btnPrimary()}">
-          📅 Book a Session on WhatsApp
+          Book a Session on WhatsApp
         </a>
 
         <button type="button" onclick="openPrintPdfForLatest()" style="${btnSecondary()}">
@@ -507,7 +507,7 @@ function showDiagnosisResult(d) {
         </button>
 
         <button type="button" onclick="goAskSamiha()" style="${btnTertiary()}">
-          ❓ Ask Samiha
+           Ask Samiha
         </button>
       </div>
     </div>
@@ -728,3 +728,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   const userId = await ensureUserId();
   if (userId) loadAllDiagnoses(userId);
 });
+
