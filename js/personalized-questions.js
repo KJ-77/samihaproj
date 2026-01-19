@@ -1,5 +1,7 @@
 /* =========================================================
+readuy questions
    PERSONALIZED QUESTIONS (Ready Answers)
+     // Later: you can change this to “Unlock with payment”
    - GET /personalized-questions
    - Render cards
    - View Answer modal
