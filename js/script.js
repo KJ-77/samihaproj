@@ -1,151 +1,278 @@
+// ====================================================================
+//  SCRIPT.JS - MAIN JAVASCRIPT FOR LANDING PAGE
+//  Handles smooth scrolling, modal functionality, protected navigation,
+//  and dynamic UI updates based on user authentication status.
+// ====================================================================
+
 // ============================================
-// SMOOTH SCROLLING WITHOUT GSAP
+// SMOOTH SCROLLING LOGIC
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
-    // Smooth scroll for all navigation links
+document.addEventListener("DOMContentLoaded", () => {
     const scrollLinks = document.querySelectorAll('a[href^="#"]');
-    
+  
     scrollLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            // Skip if href is just "#" or empty
-            if (!href || href === '#' || href === '#home') {
-                if (href === '#home' || href === '#') {
-                    e.preventDefault();
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }
-                return;
-            }
-            
-            // Find target element
-            const targetId = href.substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-                e.preventDefault();
-                
-                // Calculate position with offset for fixed header
-                const headerOffset = 100;
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu if open
-                const navbarMenu = document.querySelector('.navbar-menu');
-                if (navbarMenu && navbarMenu.classList.contains('active')) {
-                    navbarMenu.classList.remove('active');
-                }
-            }
-        });
+      link.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
+  
+        if (!href || href === "#" || href === "#home") {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+  
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+  
+        if (targetElement) {
+          e.preventDefault();
+          const headerOffset = 100;
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
+  
+          window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+  
+          const navbarMenu = document.querySelector(".navbar-menu");
+          if (navbarMenu?.classList.contains("active")) {
+            navbarMenu.classList.remove("active");
+          }
+        }
+      });
     });
-});
-
-// ============================================
-// LIFE COACHING TAB SWITCHING
-// ============================================
-function switchTab(tabId) {
-    const onlineTab = document.getElementById('online');
-    const inpersonTab = document.getElementById('inperson');
-    const tabButtons = document.querySelectorAll('.tab-btn');
-
-    if (tabId === 'online') {
-        onlineTab.style.display = 'flex';
-        inpersonTab.style.display = 'none';
-        tabButtons[0].classList.add('active');
-        tabButtons[1].classList.remove('active');
-        // Trigger animation visibility
-        setTimeout(() => {
-            const cards = onlineTab.querySelectorAll('.animate-slide-in-up');
-            cards.forEach(card => card.classList.add('visible'));
-        }, 50);
-    } else if (tabId === 'inperson') {
-        onlineTab.style.display = 'none';
-        inpersonTab.style.display = 'flex';
-        tabButtons[0].classList.remove('active');
-        tabButtons[1].classList.add('active');
-        // Trigger animation visibility
-        setTimeout(() => {
-            const cards = inpersonTab.querySelectorAll('.animate-slide-in-up');
-            cards.forEach(card => card.classList.add('visible'));
-        }, 50);
-    }
-}
-
+  });
+  
 // ============================================
 // MODAL CARD FUNCTIONALITY
 // ============================================
-function expandCard(event, cardType) {
+
+/**
+ * Expands a service card into a modal view.
+ * @param {Event} event - The click event.
+ * @param {string} cardType - The type of card (e.g., 'test', 'custom').
+ */
+  function expandCard(event, cardType) {
     event.preventDefault();
     event.stopPropagation();
-    
-    // Hide all modals first
-    const allModals = document.querySelectorAll('.expanded-card-modal');
-    allModals.forEach(modal => {
-        modal.style.display = 'none';
-    });
-    
-    // Show the overlay
-    const overlay = document.getElementById('cardOverlay');
-    if (overlay) {
-        overlay.style.display = 'block';
-    }
-    
-    // Show the specific modal
-    const modalId = cardType + '-modal';
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'block';
-    }
-    
-    // Prevent body scroll
-    document.body.style.overflow = 'hidden';
-}
-
+  
+    document
+      .querySelectorAll(".expanded-card-modal")
+      .forEach(m => (m.style.display = "none"));
+  
+    const overlay = document.getElementById("cardOverlay");
+    if (overlay) overlay.style.display = "block";
+  
+    const modal = document.getElementById(cardType + "-modal");
+    if (modal) modal.style.display = "block";
+  
+    document.body.style.overflow = "hidden";
+  }
+  
+  /**
+ * Closes the currently open expanded card modal.
+ */
 function closeExpandedCard() {
-    // Hide all modals
-    const allModals = document.querySelectorAll('.expanded-card-modal');
-    allModals.forEach(modal => {
-        modal.style.display = 'none';
-    });
-    
-    // Hide overlay
-    const overlay = document.getElementById('cardOverlay');
-    if (overlay) {
-        overlay.style.display = 'none';
-    }
-    
-    // Restore body scroll
-    document.body.style.overflow = 'auto';
-}
-
-function handleLink(event, linkType) {
-    // For external links, let them work normally
-    if (event.target.href && (event.target.href.startsWith('http') || event.target.href.startsWith('https://wa.me'))) {
-        return true;
-    }
-    
-    // For internal links that need login or special handling
-    event.preventDefault();
-    alert('This feature requires login. Please sign in to continue.');
-}
-
+    document
+      .querySelectorAll(".expanded-card-modal")
+      .forEach(m => (m.style.display = "none"));
+  
+    const overlay = document.getElementById("cardOverlay");
+    if (overlay) overlay.style.display = "none";
+  
+    document.body.style.overflow = "auto";
+  }
+  
 // ============================================
+// PROTECTED ROUTES MAP (REAL FILE NAMES)
+// ============================================
+
+// Maps the service card type to the actual HTML file name for the protected resource.
+// This is used by the handleProtectedNav function.
+  const PROTECTED_ROUTES = {
+    test: "TEST.HTML",
+    custom: "personalized-questions.html",
+    ready: "ready-questions.html",
+    "makenteh-courses": "courses.html"
+  };
+  
+// ============================================
+// REDIRECT STORAGE
+// ============================================
+
+/**
+ * Stores the target URL in localStorage for redirection after a successful login.
+ * @param {string} target - The URL to redirect to.
+ */
+  function setRedirectAfterLogin(target) {
+    localStorage.setItem("redirectAfterLogin", target);
+  }
+  
+  /**
+ * Retrieves and clears the stored redirect URL from localStorage.
+ * @returns {string|null} - The stored URL or null.
+ */
+function consumeRedirectAfterLogin() {
+    const t = localStorage.getItem("redirectAfterLogin");
+    if (t) localStorage.removeItem("redirectAfterLogin");
+    return t;
+  }
+  
+// ============================================
+// SAFE SESSION + ROLE CHECK
+// ============================================
+
+/**
+ * Checks the user's login status and role (Admin/User) using Cognito.
+ * Requires cognito-config.js to be loaded.
+ * @returns {Promise<{loggedIn: boolean, isAdmin: boolean}>}
+ */
+  async function getSessionAndRole() {
+    try {
+      if (!window.CognitoAuth || !CognitoAuth.getCurrentSession) {
+        console.warn("CognitoAuth not ready");
+        return { loggedIn: false, isAdmin: false };
+      }
+  
+      const sessionInfo = await CognitoAuth.getCurrentSession();
+  
+      if (!sessionInfo?.session || !sessionInfo.session.isValid()) {
+        return { loggedIn: false, isAdmin: false };
+      }
+  
+      const payload = sessionInfo.session.getIdToken().payload || {};
+      const groups = payload["cognito:groups"] || [];
+      const isAdmin = Array.isArray(groups) && groups.includes("Admin");
+  
+      return { loggedIn: true, isAdmin };
+    } catch (err) {
+      console.error("Session check failed:", err);
+      return { loggedIn: false, isAdmin: false };
+    }
+  }
+  
+// ============================================
+// MAIN PROTECTED NAVIGATION
+// ============================================
+
+/**
+ * Handles navigation to protected pages, enforcing login and role-based redirection.
+ * 1. If not logged in, stores the target and redirects to login.
+ * 2. If logged in as Admin, redirects to admin dashboard.
+ * 3. If logged in as User, redirects to the target page.
+ * @param {string} routeKey - Key from the PROTECTED_ROUTES map (e.g., 'test', 'custom').
+ */
+  async function handleProtectedNav(routeKey) {
+    const target = PROTECTED_ROUTES[routeKey];
+  
+    if (!target) {
+      window.location.href = "login.html";
+      return;
+    }
+  
+    const { loggedIn, isAdmin } = await getSessionAndRole();
+  
+    if (loggedIn && isAdmin) {
+      window.location.href = "admin-dashboard.html";
+      return;
+    }
+  
+    if (loggedIn) {
+      window.location.href = target;
+      return;
+    }
+  
+    setRedirectAfterLogin(target);
+    window.location.href = "login.html";
+  }
+  
+// ============================================
+// UNIVERSAL LINK HANDLER (handleLink)
+// ============================================
+
+/**
+ * Universal handler for links that require authentication.
+ * This function is called from the service card modals (e.g., Test, Ask Samiha).
+ * @param {Event} event - The click event.
+ * @param {string} linkType - The key for the protected route.
+ * @returns {boolean} - Always returns false to prevent default link behavior.
+ */
+  function handleLink(event, linkType) {
+    if (event) event.preventDefault();
+    if (linkType) {
+      handleProtectedNav(linkType);
+      return false;
+    }
+    window.location.href = "login.html";
+    return false;
+  }
+  
+// ============================================
+// TOP HEADER AUTH UI (LOGIN / DASHBOARD)
+// ============================================
+
+/**
+ * Updates the top right header buttons based on the user's login status.
+ * Shows "Login" / "Sign Up" if logged out.
+ * Shows "Dashboard" (linking to user or admin dashboard) if logged in.
+ */
+  async function updateTopHeaderAuthUI() {
+    const loginBtn = document.querySelector(".login-btn");
+    const signupBtn = document.querySelector(".signup-btn");
+    const container = document.querySelector(".top-header-right");
+  
+    if (!container) return;
+  
+    const { loggedIn, isAdmin } = await getSessionAndRole();
+  
+    const oldDash = document.getElementById("dashboardNavBtn");
+    if (oldDash) oldDash.remove();
+  
+    if (loggedIn) {
+      if (loginBtn) loginBtn.style.display = "none";
+      if (signupBtn) signupBtn.style.display = "none";
+  
+      const dash = document.createElement("a");
+      dash.id = "dashboardNavBtn";
+      dash.className = "login-btn";
+      dash.textContent = "Dashboard";
+      dash.href = isAdmin ? "admin-dashboard.html" : "user-dashboard.html";
+  
+      container.appendChild(dash);
+    } else {
+      if (loginBtn) loginBtn.style.display = "";
+      if (signupBtn) signupBtn.style.display = "";
+    }
+  }
+  
+// ============================================
+// INITIALIZATION AND ANIMATIONS
+// ============================================
+  document.addEventListener("DOMContentLoaded", () => {
+    updateTopHeaderAuthUI();
+  
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add("visible");
+        });
+      },
+      { threshold: 0.1 }
+    );
+  
+    document
+      .querySelectorAll(
+        ".animate-fade-in, .animate-slide-in-up, .animate-slide-in-left, .animate-slide-in-right, .animate-float-up"
+      )
+      .forEach(el => observer.observe(el));
+  });
+  // ============================================
 // LANGUAGE TRANSLATIONS
 // ============================================
 
 const translations = {
   en: {
     about: "About",
-    lifeCoaching: "Life Coaching",
-    events: "Events",
+    lifeCoaching: "Book Your Session",
+    events: "Happening",
     courses: "Courses",
     blog: "Blog",
     contact: "Contact",
@@ -393,23 +520,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================
-// FADE IN ANIMATIONS ON SCROLL
+// EXPOSE FUNCTIONS GLOBALLY
+// These functions must be exposed to the global window object so they can be
+// called directly from inline HTML event handlers (e.g., onclick="expandCard(...)").
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-    
-    // Observe all animated elements
-    const fadeElements = document.querySelectorAll('.animate-fade-in, .animate-slide-in-up, .animate-slide-in-left, .animate-slide-in-right, .animate-float-up');
-    fadeElements.forEach(el => observer.observe(el));
-});
+  window.handleProtectedNav = handleProtectedNav;
+  window.handleLink = handleLink;
+  window.expandCard = expandCard;
+  window.closeExpandedCard = closeExpandedCard;
+  
