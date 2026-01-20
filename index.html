@@ -151,7 +151,7 @@
         <img src="assets/images/3257d987-dafe-40c9-a636-b7958bc13245.jpg" alt="Logo">
       </a>
       <nav class="navbar-menu">
-        <a href="#services-cards" class="nav-link" data-i18n="Bookss">Take your test</a>
+        <a href="#services-cards" class="nav-link" data-i18n="Bookss">Take yoy test</a>
         <a href="#services" class="nav-link" data-i18n="lifeCoaching">Book Your Session</a>
         <a href="#events" class="nav-link" data-i18n="events">Happenings</a>
         <a href="#courses" class="nav-link" data-i18n="courses">COURSES</a>
@@ -326,37 +326,68 @@
         <h2 class="animate-fade-in" data-i18n="lifeCoaching">Life Coaching</h2>
         <h3 class="animate-fade-in" data-i18n="bookServices">Book Services</h3>
         
-        <div class="service-tabs animate-fade-in">
-          <button class="tab-btn active" onclick="switchTab('online')" data-i18n="online">Online</button>
-          <button class="tab-btn" onclick="switchTab('inperson')" data-i18n="inPerson">In person</button>
+        <!-- ONLINE BOOKING SECTION -->
+        <div class="booking-group animate-fade-in" style="margin-bottom: 60px;">
+          <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 1.8rem;">Online Coaching</h3>
+          <div class="services-grid">
+            <!-- WhatsApp Online -->
+            <a href="https://wa.me/96103960540?text=I%20would%20like%20to%20book%20my%20online%20one-to-one%20meeting" target="_blank" class="service-card-link">
+              <div class="service-card animate-slide-in-up">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-10.6 8.38 8.38 0 0 1 3.8.9L21 3.5Z"></path></svg>
+                </div>
+                <h4>Book Online via WhatsApp</h4>
+                <p>Click to start a WhatsApp chat and book your personalized online coaching session.</p>
+              </div>
+            </a>
+            
+            <!-- Email Online -->
+            <a href="mailto:lifecoach.samiha@gmail.com?subject=Online%20Coaching%20Booking&body=I%20would%20like%20to%20book%20an%20online%20one-to-one%20meeting." class="service-card-link">
+              <div class="service-card animate-slide-in-up">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+                <h4>Book Online via Email</h4>
+                <p>Send us an email to schedule your personalized online coaching session.</p>
+              </div>
+            </a>
+          </div>
         </div>
 
-        <div class="services-grid" id="online">
-          <a href="https://wa.me/96103960540?text=I%20would%20like%20to%20book%20my%20online%20one-to-one%20meeting" target="_blank" class="service-card-link">
-            <div class="service-card animate-slide-in-up">
-              <div class="service-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <!-- IN-PERSON BOOKING SECTION -->
+        <div class="booking-group animate-fade-in" style="margin-bottom: 60px;">
+          <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 1.8rem;">In-Person Coaching</h3>
+          <div class="services-grid">
+            <!-- WhatsApp In-Person -->
+            <a href="https://wa.me/96103960540?text=I%20would%20like%20to%20book%20my%20in-person%20meeting" target="_blank" class="service-card-link">
+              <div class="service-card animate-slide-in-up">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-10.6 8.38 8.38 0 0 1 3.8.9L21 3.5Z"></path></svg>
+                </div>
+                <h4>Book In-Person via WhatsApp</h4>
+                <p>Click to start a WhatsApp chat and book your personalized in-person coaching session.</p>
               </div>
-              <h4 data-i18n="oneToOneOnline">Book your online one-to-one meeting</h4>
-              <p data-i18n="onlineBookingDesc">Click to book your personalized online coaching session via WhatsApp.</p>
-            </div>
-          </a>
-          
+            </a>
 
+            <!-- Email In-Person -->
+            <a href="mailto:lifecoach.samiha@gmail.com?subject=In-Person%20Coaching%20Booking&body=I%20would%20like%20to%20book%20an%20in-person%20one-to-one%20meeting." class="service-card-link">
+              <div class="service-card animate-slide-in-up">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+                <h4>Book In-Person via Email</h4>
+                <p>Send us an email to schedule your personalized in-person coaching session.</p>
+              </div>
+            </a>
+          </div>
         </div>
 
-        <div class="services-grid" id="inperson" style="display: none;">
-          <a href="https://wa.me/96103960540?text=I%20would%20like%20to%20book%20my%20in-person%20meeting" target="_blank" class="service-card-link">
-            <div class="service-card animate-slide-in-up">
-              <div class="service-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              </div>
-              <h4 data-i18n="oneToOneInPerson">Book your in-person meeting</h4>
-              <p data-i18n="inPersonBookingDesc">Click to book your personalized in-person coaching session via WhatsApp.</p>
-            </div>
+        <!-- Ask Samiha Button -->
+        <div style="text-align: center; margin-top: 20px;" class="animate-fade-in">
+          <a href="#" onclick="handleLink(event, 'custom')" class="btn-primary" style="display: inline-block; padding: 18px 50px; font-size: 1.2rem; border-radius: 35px; text-decoration: none; background-color: var(--secondary-color); color: white; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 2px solid transparent;">
+            Ask Samiha a Question
           </a>
-          
-
+          <p style="margin-top: 15px; color: #666; font-style: italic;">Have a specific question? Ask Samiha directly!</p>
         </div>
       </div>
     </section>
