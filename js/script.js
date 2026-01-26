@@ -420,6 +420,16 @@ bookInPersonSession: "Book In-Person Session",
 takePersonalityTest: "Take Personality Test",
 
     home: "Home",
+    bookModalTitle: "Book Your Session",
+bookModalSubtitle: "Schedule your personalized coaching session and start your transformation journey today.",
+bookModalOptionsTitle: "Session Options:",
+bookOptionOneToOne: "One-to-One Coaching Session",
+bookOptionPersonality: "Personality Test Assessment",
+bookOptionGroup: "Group Workshop Session",
+bookOptionCorporate: "Corporate Training Program",
+bookWhatsapp: "💬 WhatsApp Now",
+bookContactSection: "Contact us section",
+
     
     footerRights:
       "© 2025 @ Samiha Zeindine Professional Life Coach. All rights reserved."
@@ -558,6 +568,15 @@ takePersonalityTest: "Take Personality Test",
   bookOnlineSession: "احجز جلسة أونلاين",
 bookInPersonSession: "احجز جلسة حضورية",
 takePersonalityTest: "قم بإجراء اختبار الشخصية",
+bookModalTitle: "احجز جلستك",
+bookModalSubtitle: "حدد موعد جلستك التدريبية المخصصة وابدأ رحلة التحول الخاصة بك اليوم.",
+bookModalOptionsTitle: "خيارات الجلسة:",
+bookOptionOneToOne: "جلسة تدريب فردية",
+bookOptionPersonality: "تقييم اختبار الشخصية",
+bookOptionGroup: "جلسة ورشة جماعية",
+bookOptionCorporate: "برنامج تدريب للشركات",
+bookWhatsapp: "💬 واتساب الآن",
+bookContactSection: "قسم التواصل",
 
   home: "الرئيسية",
   
@@ -630,6 +649,15 @@ bookOnlineSession: "Réserver une séance en ligne",
 bookInPersonSession: "Réserver une séance en présentiel",
 takePersonalityTest: "Passer le test de personnalité",
 
+bookModalTitle: "Réservez votre séance",
+bookModalSubtitle: "Planifiez votre séance de coaching personnalisée et commencez votre parcours de transformation dès aujourd’hui.",
+bookModalOptionsTitle: "Options de séance :",
+bookOptionOneToOne: "Séance de coaching individuelle",
+bookOptionPersonality: "Évaluation de test de personnalité",
+bookOptionGroup: "Atelier de groupe",
+bookOptionCorporate: "Programme de formation en entreprise",
+bookWhatsapp: "💬 WhatsApp maintenant",
+bookContactSection: "Section Contact",
 
     footerRights:
       "© 2025 Samiha Zeineddine Coach de vie professionnelle. Tous droits réservés."
