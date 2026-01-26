@@ -270,210 +270,377 @@ function consumeRedirectAfterLogin() {
 
 const translations = {
   en: {
-    about: "About",
+    login: "Login",
+    signUp: "Sign Up",
+    logout: "Logout",
+
+    Bookss: "Take your test",
     lifeCoaching: "Book Your Session",
-    events: "Happening",
-    courses: "Courses",
-    blog: "Blog",
-    contact: "Contact",
-    whoIsSamiha: "Who is Samiha",
-    bookServices: "Book Services",
-    online: "Online",
-    inPerson: "In person",
-    oneToOne: "One-to-One Session",
-    oneToOneOnline: "Book your online one-to-one meeting",
-    onlineBookingDesc: "Click to book your personalized online coaching session via WhatsApp.",
-    oneToOneInPerson: "Book your in-person meeting",
-    inPersonBookingDesc: "Click to book your personalized in-person coaching session via WhatsApp.",
-    personalizedCoaching: "Personalized coaching tailored to your needs",
-    personalityTest: "Personality Test",
-    discoverPersonality: "Discover your personality type",
-    workshop: "Workshop",
-    selfAwarenessWorkshop: "Self-Awareness Workshop",
-    registerNow: "Register Now",
-    masterClass: "Master Class",
-    certifiedLifeCoach: "Certified Life Coach Training",
-    previousEvents: "Previous Events",
-    selfDiscovery: "Self Discovery",
-    emotionalPsychology: "Emotional Psychology",
-    bodyLanguage: "Body Language",
-    selfLove: "Self Love",
-    signIn: "Sign in",
-    takeTest: "Take your personality test",
-    thePowerOfSelfDiscovery: "The Power of Self-Discovery",
-    emotionalIntelligence: "Emotional Intelligence in Daily Life",
-    bookYour: "Book your:",
-    moreInfo: "More Info:",
-    aboutServices: "About Services",
-    courseDetails: "Course Details",
-    contactOnWhatsApp: "Contact on WhatsApp",
-    quickLinks: "Quick Links",
-    contactInfo: "Contact Info",
-    followUs: "Follow Us",
-    onlineCoaching: "Online Coaching",
-    getMotivation: "Get motivation. Any time. Any place.",
-    transformYourLife: "Transform Your Life",
-    discoverPotential: "Discover your true potential",
-    personalGrowth: "Personal Growth",
-    unlockPotential: "Unlock your potential and achieve goals",
-    selfDiscoveryDesc: "Discover your true self and unlock potential",
-    emotionalPsychologyDesc: "Master emotional intelligence",
-    bodyLanguageDesc: "Learn non-verbal communication",
-    selfLoveDesc: "Cultivate self-compassion",
-    adminDashboard: "Admin Dashboard",
-    userDashboard: "User Dashboard",
+    events: "Happenings",
+    courses: "COURSES",
+    blog: "BLOG",
+    contact: "CONTACT",
+
+    heroLine1: "Life Coach",
+    heroLine2: "Samiha",
+    heroLine3: "Zeineddine",
+
     testTitle: "Tests",
     testDesc: "Take your personality test",
+
     readyTitle: "Paid Ready Questions and Answers",
     readyDesc: "Pre-made coaching questions",
-    customTitle: "Your Questions For Samiha",
+
+    customTitle: "Ask samiha a Questions",
     customDesc: "Personalized coaching questions",
+
     coursesTitle: "Courses",
     coursesDesc: "Explore our coaching courses",
+
     bookTitle: "Book",
     bookDesc: "Schedule your session",
+
+    viewDetails: "VIEW DETAILS",
+
+    /* ===== TEST MODAL ===== */
+    testModalTitle: "Personality Tests",
+    testModalDesc:
+      "Discover your personality type and unlock your potential through our comprehensive assessment.",
+    whatYouGet: "What You'll Get:",
+    testPoint1: "Complete personality profile analysis",
+    testPoint2: "Detailed strength and weakness assessment",
+    testPoint3: "Action plan for personal growth",
+    takeTestNow: "Take the Test Now",
+
+    /* ===== READY MODAL ===== */
+    readyModalTitle: "Ready Questions",
+    readyModalDesc:
+      "Explore our collection of pre-made coaching questions designed to guide your personal development journey.",
+    availableQuestionSets: "Available Question Sets:",
+    readyQ1: "Self-Discovery Questions",
+    readyQ2: "Goal Setting & Achievement",
+    readyQ3: "Emotional Intelligence Development",
+    readyQ4: "Relationship & Communication",
+    readyQ5: "Career & Life Purpose",
+    viewQuestions: "View Questions Now",
+
+    /* ===== CUSTOM MODAL ===== */
+    customModalTitle: "Ask samihaa  question",
+    customModalDesc:
+      "Ask Samiha your personalized coaching questions. After logging in, you will be redirected to your dashboard where you can submit your questions and view responses.",
+    loginAsk: "Login and ask Questions",
+
+    /* ===== COURSES MODAL ===== */
+    coursesModalTitle: "Courses",
+    coursesModalDesc:
+      "Explore our comprehensive coaching courses designed to enhance your skills and knowledge.",
+    availableCourses: "Available Courses:",
+    course1: "Self-Discovery Masterclass",
+    course2: "Emotional Intelligence Training",
+    course3: "Body Language & Communication",
+    course4: "Self-Love & Confidence Building",
+    course5: "Advanced Coaching Techniques",
+    loginEnroll: "Login and Enroll now",
+
+    /* ===== BOOK SESSION MODAL ===== */
+    bookModalTitle: "Book Your Session",
+    bookModalDesc:
+      "Schedule your personalized coaching session and start your transformation journey today.",
+    sessionOptions: "Session Options:",
+    session1: "One-to-One Coaching Session",
+    session2: "Personality Test Assessment",
+    session3: "Group Workshop Session",
+    session4: "Corporate Training Program",
+    whatsappNow: "💬 WhatsApp Now",
+    contactSectionLink: "Contact us section",
+
+    /* ===== LIFE COACHING SECTION ===== */
+    bookServices: "Book Services",
+
+    onlineCoaching: "Online Coaching",
+    inPersonCoaching: "In-Person Coaching",
+
+    bookOnlineWhatsApp: "Book Online via WhatsApp",
+    bookOnlineEmail: "Book Online via Email",
+    bookInPersonWhatsApp: "Book In-Person via WhatsApp",
+    bookInPersonEmail: "Book In-Person via Email",
+
+    bookOnlineWhatsAppDesc:
+      "Click to start a WhatsApp chat and book your personalized online coaching session.",
+    bookOnlineEmailDesc:
+      "Send us an email to schedule your personalized online coaching session.",
+    bookInPersonWhatsAppDesc:
+      "Click to start a WhatsApp chat and book your personalized in-person coaching session.",
+    bookInPersonEmailDesc:
+      "Send us an email to schedule your personalized in-person coaching session.",
+
+    askSamihaBtn: "Ask Samiha a Question",
+    askSamihaHint: "Have a specific question? Ask Samiha directly!",
+
+    selfDiscovery: "Self Discovery",
+    selfDiscoveryDesc: "Discover your true self and unlock potential",
+    emotionalPsychology: "Emotional Psychology",
+    emotionalPsychologyDesc: "Master emotional intelligence",
+    bodyLanguage: "Body Language",
+    bodyLanguageDesc: "Learn non-verbal communication",
+    selfLove: "Self Love",
+    selfLoveDesc: "Cultivate self-compassion",
+
+    blogTitle: "The Journey of Self-Discovery",
+    readMore: "Read More",
+
+    getInTouch: "Get in Touch",
+    connectWithSamiha: "Connect with Samiha",
+    contactDesc:
+      "Ready to start your journey? Reach out through your preferred channel.",
+
+    bookOnlineSession: "Book Online Session",
+    bookInPersonSession: "Book In-Person Session",
+    takePersonalityTest: "Take Personality Test",
+    askSamihaBtn: "Ask Samiha a Question",
+    askSamihaHint: "Have a specific question? Ask Samiha directly!",
+
+    blogTitle: "The Journey of Self-Discovery",
+    blogExcerpt:
+      "In a world that constantly demands our attention, finding a moment for self-reflection can be a revolutionary act. The journey of self-discovery is not a linear path, but a spiral, where we revisit themes with new perspectives. It is about peeling back the layers of societal expectations and finding the authentic core of who we are. This process, though challenging, is the foundation for true personal growth and lasting fulfillment. Embrace the unknown within, for it holds the map to your greatest potential.",
+    readMore: "Read More",
+
+    getInTouch: "Get in Touch",
+    connectWithSamiha: "Connect with Samiha",
+    contactDesc: "Ready to start your journey? Reach out through your preferred channel.",
+    
+    contactWhatsapp: "WhatsApp: +961 03960540",
+    contactEmail: "Email: contact@coaching.com",
+    contactInstagram: "Instagram: @lifecoach.samiha",
+    
+    bookSession: "Book Your Session",
+    bookFooterDesc: "Use the links below to schedule your one-on-one or test session.",
+    bookOnlineSession: "Book Online Session",
+bookInPersonSession: "Book In-Person Session",
+takePersonalityTest: "Take Personality Test",
+
     home: "Home",
-    logout: "Logout",
-    login: "Login",
-    signUp: "Sign Up"
+    
+    footerRights:
+      "© 2025 @ Samiha Zeindine Professional Life Coach. All rights reserved."
   },
+
   ar: {
-    about: "حول",
-    lifeCoaching: "تدريب الحياة",
-    events: "الأحداث",
+    login: "تسجيل الدخول",
+    signUp: "إنشاء حساب",
+    logout: "تسجيل الخروج",
+
+    Bookss: "إجراء الاختبار",
+    lifeCoaching: "احجز جلستك",
+    events: "الفعاليات",
     courses: "الدورات",
     blog: "المدونة",
-    contact: "اتصل",
-    whoIsSamiha: "من هي سميحة",
-    bookServices: "احجز الخدمات",
-    online: "أونلاين",
-    inPerson: "وجهاً لوجه",
-    oneToOne: "جلسة فردية",
-    oneToOneOnline: "احجز اجتماعك الفردي عبر الإنترنت",
-    onlineBookingDesc: "انقر لحجز جلسة التدريب الشخصية عبر الإنترنت عبر واتساب.",
-    oneToOneInPerson: "احجز اجتماعك الشخصي",
-    inPersonBookingDesc: "انقر لحجز جلسة التدريب الشخصية وجهاً لوجه عبر واتساب.",
-    personalizedCoaching: "تدريب شخصي مخصص لاحتياجاتك",
-    personalityTest: "اختبار الشخصية",
-    discoverPersonality: "اكتشف نوع شخصيتك",
-    workshop: "ورشة عمل",
-    selfAwarenessWorkshop: "ورشة الوعي الذاتي",
-    registerNow: "سجل الآن",
-    masterClass: "فئة رئيسية",
-    certifiedLifeCoach: "تدريب مدرب الحياة المعتمد",
-    previousEvents: "الأحداث السابقة",
-    selfDiscovery: "اكتشاف الذات",
-    emotionalPsychology: "علم النفس العاطفي",
-    bodyLanguage: "لغة الجسد",
-    selfLove: "حب النفس",
-    signIn: "تسجيل الدخول",
-    takeTest: "خذ اختبار الشخصية الخاص بك",
-    thePowerOfSelfDiscovery: "قوة اكتشاف الذات",
-    emotionalIntelligence: "الذكاء العاطفي في الحياة اليومية",
-    bookYour: "احجز:",
-    moreInfo: "معلومات أخرى:",
-    aboutServices: "حول الخدمات",
-    courseDetails: "تفاصيل الدورة",
-    contactOnWhatsApp: "اتصل على WhatsApp",
-    quickLinks: "روابط سريعة",
-    contactInfo: "معلومات الاتصال",
-    followUs: "تابعنا",
-    onlineCoaching: "التدريب عبر الإنترنت",
-    getMotivation: "احصل على الحافز. في أي وقت. في أي مكان.",
-    transformYourLife: "غيّر حياتك",
-    discoverPotential: "اكتشف إمكانياتك الحقيقية",
-    personalGrowth: "النمو الشخصي",
-    unlockPotential: "افتح إمكانياتك وحقق أهدافك",
-    selfDiscoveryDesc: "اكتشف ذاتك الحقيقية وافتح الإمكانات",
-    emotionalPsychologyDesc: "إتقان الذكاء العاطفي",
-    bodyLanguageDesc: "تعلم التواصل غير اللفظي",
-    selfLoveDesc: "زرع التعاطف مع الذات",
-    adminDashboard: "لوحة تحكم المسؤول",
-    userDashboard: "لوحة تحكم المستخدم",
-    testTitle: "اختبار",
-    testDesc: "خذ اختبار الشخصية الخاص بك",
-    readyTitle: "سؤال جاهز",
-    readyDesc: "أسئلة تدريب جاهزة",
-    customTitle: "أسئلة مخصصة",
-    customDesc: "أسئلة تدريب شخصية",
+    contact: "تواصل معنا",
+
+    heroLine1: "مدربة حياة",
+    heroLine2: "سميحة",
+    heroLine3: "زين الدين",
+
+    testTitle: "الاختبارات",
+    testDesc: "قم بإجراء اختبار الشخصية",
+
+    readyTitle: "أسئلة وأجوبة جاهزة مدفوعة",
+    readyDesc: "أسئلة تدريبية جاهزة",
+
+    customTitle: "اسأل سميحة سؤالاً",
+    customDesc: "أسئلة تدريبية مخصصة",
+
     coursesTitle: "الدورات",
-    coursesDesc: "استكشف دوراتنا التدريبية",
+    coursesDesc: "استكشف دورات التدريب",
+
     bookTitle: "احجز",
     bookDesc: "حدد موعد جلستك",
-    home: "الرئيسية",
-    logout: "تسجيل الخروج",
-    login: "تسجيل الدخول",
-    signUp: "التسجيل"
+
+    viewDetails: "عرض التفاصيل",
+
+    testModalTitle: "اختبارات الشخصية",
+    testModalDesc:
+      "اكتشف نوع شخصيتك وافتح إمكانياتك من خلال تقييم شامل.",
+    whatYouGet: "ماذا ستحصل:",
+    testPoint1: "تحليل كامل للشخصية",
+    testPoint2: "تقييم نقاط القوة والضعف",
+    testPoint3: "خطة عمل للنمو الشخصي",
+    takeTestNow: "ابدأ الاختبار الآن",
+
+    readyModalTitle: "أسئلة جاهزة",
+    readyModalDesc:
+      "استكشف مجموعتنا من الأسئلة التدريبية الجاهزة لدعم رحلتك في التطور الشخصي.",
+    availableQuestionSets: "مجموعات الأسئلة:",
+    readyQ1: "أسئلة اكتشاف الذات",
+    readyQ2: "تحديد الأهداف وتحقيقها",
+    readyQ3: "تطوير الذكاء العاطفي",
+    readyQ4: "العلاقات والتواصل",
+    readyQ5: "المسار المهني ومعنى الحياة",
+    viewQuestions: "عرض الأسئلة",
+
+    customModalTitle: "اسأل سميحة سؤالاً",
+    customModalDesc:
+      "بعد تسجيل الدخول، سيتم توجيهك إلى لوحة التحكم حيث يمكنك إرسال أسئلتك ومتابعة الردود.",
+    loginAsk: "سجّل الدخول واطرح سؤالك",
+
+    coursesModalTitle: "الدورات",
+    coursesModalDesc:
+      "استكشف دورات التدريب الشاملة لتطوير مهاراتك ومعرفتك.",
+    availableCourses: "الدورات المتاحة:",
+    course1: "دورة اكتشاف الذات",
+    course2: "تدريب الذكاء العاطفي",
+    course3: "لغة الجسد والتواصل",
+    course4: "بناء حب الذات والثقة",
+    course5: "تقنيات تدريب متقدمة",
+    loginEnroll: "سجّل الدخول وسجّل الآن",
+
+    bookModalTitle: "احجز جلستك",
+    bookModalDesc:
+      "حدد جلستك التدريبية الشخصية وابدأ رحلة التغيير اليوم.",
+    sessionOptions: "خيارات الجلسة:",
+    session1: "جلسة فردية",
+    session2: "تقييم اختبار الشخصية",
+    session3: "ورشة جماعية",
+    session4: "برنامج تدريبي للشركات",
+    whatsappNow: "واتساب الآن",
+    contactSectionLink: "قسم التواصل",
+
+    bookServices: "حجز الخدمات",
+
+    onlineCoaching: "تدريب عبر الإنترنت",
+    inPersonCoaching: "تدريب حضوري",
+
+    bookOnlineWhatsApp: "احجز عبر واتساب",
+    bookOnlineEmail: "احجز عبر البريد الإلكتروني",
+    bookInPersonWhatsApp: "احجز حضوري عبر واتساب",
+    bookInPersonEmail: "احجز حضوري عبر البريد",
+
+    bookOnlineWhatsAppDesc:
+      "اضغط لبدء محادثة واتساب وحجز جلستك التدريبية عبر الإنترنت.",
+    bookOnlineEmailDesc:
+      "أرسل لنا بريدًا إلكترونيًا لحجز جلستك التدريبية عبر الإنترنت.",
+    bookInPersonWhatsAppDesc:
+      "اضغط لبدء محادثة واتساب وحجز جلستك التدريبية الحضورية.",
+    bookInPersonEmailDesc:
+      "أرسل لنا بريدًا إلكترونيًا لحجز جلستك التدريبية الحضورية.",
+    askSamihaBtn: "اسأل سميحة سؤالاً",
+    askSamihaHint: "هل لديك سؤال محدد؟ اسأل سميحة مباشرة!",
+  
+    blogTitle: "رحلة اكتشاف الذات",
+    blogExcerpt:
+        "في عالم يطالب باهتمامنا باستمرار، يصبح العثور على لحظة للتأمل الذاتي فعلًا ثوريًا. رحلة اكتشاف الذات ليست طريقًا مستقيمًا، بل مسارًا دائريًا نعود فيه إلى المواضيع نفسها برؤى جديدة. إنها عملية إزالة طبقات التوقعات الاجتماعية للوصول إلى جوهرنا الحقيقي. ورغم صعوبتها، فهي الأساس للنمو الشخصي الحقيقي والرضا الدائم. احتضن المجهول بداخلك، فهو يحمل خريطة أعظم إمكانياتك.",
+    readMore: "اقرأ المزيد",
+    courses: "الدورات",
+    coursesTitle: "الدورات",
+   coursesDesc: "استكشف دورات التدريب",
+
+   selfDiscovery: "اكتشاف الذات",
+  selfDiscoveryDesc: "اكتشف ذاتك الحقيقية وحرر إمكانياتك",
+
+    emotionalPsychology: "علم النفس العاطفي",
+    emotionalPsychologyDesc: "إتقان الذكاء العاطفي",
+
+    bodyLanguage: "لغة الجسد",
+  bodyLanguageDesc: "تعلم التواصل غير اللفظي",
+
+    selfLove: "حب الذات",
+  selfLoveDesc: "تنمية التعاطف مع الذات",
+  getInTouch: "تواصل معنا",
+  connectWithSamiha: "تواصل مع سميحة",
+  contactDesc: "هل أنت مستعد لبدء رحلتك؟ تواصل معنا عبر الوسيلة التي تفضلها.",
+  
+  contactWhatsapp: "واتساب: ‎+961 03960540",
+  contactEmail: "البريد الإلكتروني: contact@coaching.com",
+  contactInstagram: "إنستغرام: lifecoach.samiha",
+  
+  bookSession: "احجز جلستك",
+  bookFooterDesc: "استخدم الروابط أدناه لحجز جلستك الفردية أو اختبار الشخصية.",
+  bookOnlineSession: "احجز جلسة أونلاين",
+bookInPersonSession: "احجز جلسة حضورية",
+takePersonalityTest: "قم بإجراء اختبار الشخصية",
+
+  home: "الرئيسية",
+  
+
+    footerRights:
+      "© 2025 سميحة زين الدين. جميع الحقوق محفوظة."
   },
+
   fr: {
-    about: "À propos",
-    lifeCoaching: "Coaching de vie",
-    events: "Événements",
-    courses: "Cours",
-    blog: "Blog",
-    contact: "Contact",
-    whoIsSamiha: "Qui est Samiha",
-    bookServices: "Réserver des services",
-    online: "En ligne",
-    inPerson: "En personne",
-    oneToOne: "Séance individuelle",
-    oneToOneOnline: "Réservez votre réunion individuelle en ligne",
-    onlineBookingDesc: "Cliquez pour réserver votre session de coaching personnalisée en ligne via WhatsApp.",
-    oneToOneInPerson: "Réservez votre réunion en personne",
-    inPersonBookingDesc: "Cliquez pour réserver votre session de coaching personnalisée en personne via WhatsApp.",
-    personalizedCoaching: "Coaching personnalisé adapté à vos besoins",
-    personalityTest: "Test de personnalité",
-    discoverPersonality: "Découvrez votre type de personnalité",
-    workshop: "Atelier",
-    selfAwarenessWorkshop: "Atelier de sensibilisation",
-    registerNow: "S'inscrire maintenant",
-    masterClass: "Classe de maître",
-    certifiedLifeCoach: "Formation de coach de vie certifiée",
-    previousEvents: "Événements précédents",
-    selfDiscovery: "Découverte de soi",
-    emotionalPsychology: "Psychologie émotionnelle",
-    bodyLanguage: "Langage corporel",
-    selfLove: "Amour de soi",
-    signIn: "Se connecter",
-    takeTest: "Faites votre test de personnalité",
-    thePowerOfSelfDiscovery: "Le pouvoir de la découverte de soi",
-    emotionalIntelligence: "L'intelligence émotionnelle dans la vie quotidienne",
-    bookYour: "Réservez votre:",
-    moreInfo: "Plus d'informations:",
-    aboutServices: "À propos des services",
-    courseDetails: "Détails du cours",
-    contactOnWhatsApp: "Contacter sur WhatsApp",
-    quickLinks: "Liens rapides",
-    contactInfo: "Informations de contact",
-    followUs: "Nous suivre",
-    onlineCoaching: "Coaching en ligne",
-    getMotivation: "Obtenez de la motivation. N'importe quand. N'importe où.",
-    transformYourLife: "Transformez votre vie",
-    discoverPotential: "Découvrez votre vrai potentiel",
-    personalGrowth: "Croissance personnelle",
-    unlockPotential: "Libérez votre potentiel et atteignez vos objectifs",
-    selfDiscoveryDesc: "Découvrez votre vrai moi et libérez votre potentiel",
-    emotionalPsychologyDesc: "Maîtriser l'intelligence émotionnelle",
-    bodyLanguageDesc: "Apprendre la communication non verbale",
-    selfLoveDesc: "Cultiver l'auto-compassion",
-    adminDashboard: "Tableau de bord Admin",
-    userDashboard: "Tableau de bord Utilisateur",
-    testTitle: "Test",
-    testDesc: "Faites votre test de personnalité",
-    readyTitle: "Question Prête",
-    readyDesc: "Questions de coaching pré-faites",
-    customTitle: "Questions Personnalisées",
-    customDesc: "Questions de coaching personnalisées",
-    coursesTitle: "Cours",
-    coursesDesc: "Explorez nos cours de coaching",
-    bookTitle: "Réserver",
-    bookDesc: "Planifiez votre session",
-    home: "Accueil",
-    logout: "Déconnexion",
     login: "Connexion",
-    signUp: "S'inscrire"
+    signUp: "S’inscrire",
+    logout: "Déconnexion",
+
+    Bookss: "Passer le test",
+    lifeCoaching: "Réservez votre séance",
+    events: "Événements",
+    courses: "COURS",
+    blog: "BLOG",
+    contact: "CONTACT",
+
+    heroLine1: "Coach de vie",
+    heroLine2: "Samiha",
+    heroLine3: "Zeineddine",
+
+    testTitle: "Tests",
+    testDesc: "Passez votre test de personnalité",
+
+    readyTitle: "Questions et réponses prêtes payantes",
+    readyDesc: "Questions de coaching prêtes",
+
+    customTitle: "Poser une question à Samiha",
+    customDesc: "Questions de coaching personnalisées",
+
+    coursesTitle: "Cours",
+    coursesDesc: "Découvrez nos cours de coaching",
+
+    bookTitle: "Réserver",
+    bookDesc: "Planifiez votre séance",
+
+    viewDetails: "VOIR LES DÉTAILS",
+
+    testModalTitle: "Tests de personnalité",
+    testModalDesc:
+      "Découvrez votre type de personnalité et libérez votre potentiel grâce à une évaluation complète.",
+    whatYouGet: "Ce que vous obtiendrez :",
+    testPoint1: "Analyse complète du profil de personnalité",
+    testPoint2: "Évaluation détaillée des forces et faiblesses",
+    testPoint3: "Plan d’action pour le développement personnel",
+    takeTestNow: "Passer le test maintenant",
+    askSamihaBtn: "Poser une question à Samiha",
+    askSamihaHint: "Vous avez une question précise ? Demandez directement à Samiha !",
+
+    blogTitle: "Le voyage de la découverte de soi",
+    blogExcerpt:
+      "Dans un monde qui exige constamment notre attention, trouver un moment de réflexion personnelle peut être un acte révolutionnaire. Le chemin de la découverte de soi n’est pas linéaire, mais cyclique, nous revenons aux mêmes thèmes avec de nouvelles perspectives. Il s’agit de retirer les couches des attentes sociales pour trouver notre véritable essence. Bien que difficile, ce processus est la base d’un épanouissement personnel durable. Accueillez l’inconnu en vous, il contient la carte de votre plus grand potentiel.",
+    readMore: "Lire la suite",
+    getInTouch: "Contactez-nous",
+connectWithSamiha: "Contactez Samiha",
+contactDesc: "Prêt à commencer votre parcours ? Contactez-nous par le moyen de votre choix.",
+
+contactWhatsapp: "WhatsApp : +961 03960540",
+contactEmail: "Email : contact@coaching.com",
+contactInstagram: "Instagram : lifecoach.samiha",
+
+bookSession: "Réserver votre séance",
+bookFooterDesc: "Utilisez les liens ci-dessous pour réserver votre séance individuelle ou votre test.",
+
+home: "Accueil",
+bookOnlineSession: "Réserver une séance en ligne",
+bookInPersonSession: "Réserver une séance en présentiel",
+takePersonalityTest: "Passer le test de personnalité",
+
+
+    footerRights:
+      "© 2025 Samiha Zeineddine Coach de vie professionnelle. Tous droits réservés."
   }
 };
+
+
+
+
+
+
 
 let currentLanguage = 'en';
 
