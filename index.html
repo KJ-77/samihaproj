@@ -187,14 +187,14 @@
 
           </div>
           <div class="service-tile animate-slide-in-up" onclick="expandCard(event, 'ready')">
-            <div class="service-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+            <div class="service-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v4H9z"></path><path d="M9 7h6v8H9z"></path><path d="M6 15h12v2H6z"></path></svg></div>
             <h3 class="service-tile-title" data-i18n="readyTitle">Paid Ready Questions and Answers</h3>
             <p class="service-tile-description" data-i18n="readyDesc">Pre-made coaching questions</p>
             <button class="service-tile-btn" data-i18n="viewDetails">VIEW DETAILS</button>
 
           </div>
           <div class="service-tile animate-slide-in-up" onclick="expandCard(event, 'custom')">
-            <div class="service-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08-5.08l4.24-4.24"></path></svg></div>
+            <div class="service-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v4H9z"></path><path d="M9 7h6v8H9z"></path><path d="M6 15h12v2H6z"></path></svg></div>
             <h3 class="service-tile-title" data-i18n="customTitle">Ask samiha a Questions</h3>
             <p class="service-tile-description" data-i18n="customDesc">Personalized coaching questions</p>
             <button class="service-tile-btn" data-i18n="viewDetails">VIEW DETAILS</button>
@@ -325,10 +325,34 @@
 </div>
 
 <!-- LIFE COACHING SECTION -->
-<section class="services-section" id="services">
+<section
+  class="services-section"
+  id="services"
+  style="
+    position: relative;
+    padding: 100px 0;
+    background: linear-gradient(
+      135deg,
+      #fff4c2,
+      #f4d35e,
+      #d4af37,
+      #c9a227,
+      #fff4c2
+    );
+    overflow: hidden;
+  "
+>
+
   <div class="container">
 
-    <h3 class="animate-fade-in" data-i18n="bookServices">Book Services</h3>
+    <h1
+    class="animate-fade-in"
+    data-i18n="bookServices"
+    style="text-align: center; color: var(--primary-color);"
+  >
+    Book Services
+  </h1>
+  
 
     <!-- ONLINE BOOKING SECTION -->
     <div class="booking-group animate-fade-in" style="margin-bottom: 60px;">
