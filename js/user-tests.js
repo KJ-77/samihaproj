@@ -13,6 +13,146 @@
 ========================================================= */
 
 /* ===============================
+   TRANSLATIONS (i18n)
+================================ */
+const translations = {
+  en: {
+    loadingTests: "Loading tests...",
+    failedToLoadTests: "Failed to load tests.",
+    startTest: "Start Test",
+    next: "Next",
+    previous: "Previous",
+    finishTest: "Finish Test",
+    pleaseAnswerHonestly: "Please answer honestly — there are no right or wrong answers.",
+    yourAnswersPrivate: "Your answers are private and secure.",
+    questionOf: "Question {current} of {total}",
+    answerRequired: "* Answer required",
+    pleaseSelectAnswer: "Please select an answer.",
+    loginAgain: "Please login again.",
+    noQuestions: "No questions found for this test.",
+    bookWhatsapp: "Book Session",
+    askSamiha: "Ask Samiha",
+    takeAnotherTest: "Take Another Test",
+    readFullExplanation: "Read Full Explanation",
+    completedOn: "Completed on {date}",
+    leavePageTitle: "Leave this page?",
+    leavePageDesc: "If you leave now, your result stays saved, but you’ll exit this screen.",
+    confirmLeave: "Yes, Leave",
+    cancelLeave: "Stay here",
+    previousResults: "Your Previous Results",
+    previousResultsDesc: "History of your completed personality tests",
+    viewDetails: "View Details",
+    downloadPdf: "Download PDF",
+    close: "Close",
+    submitConfirmTitle: "Submit Test?",
+    submitConfirmDesc: "Are you sure you want to submit your answers?",
+    confirmSubmit: "Yes, Submit",
+    cancelSubmit: "Not yet",
+    whatsappText: "Hello Samiha 👋 I just received my personality test results and I’d like to book a session to discuss them.",
+    backHome: "Back Home",
+    personalityTests: "Personality Tests",
+    personalityAssessments: "Personality Assessments",
+    testsIntro: "Please choose a test to begin your journey of self-discovery."
+  },
+  ar: {
+    loadingTests: "جاري تحميل الاختبارات...",
+    failedToLoadTests: "فشل تحميل الاختبارات.",
+    startTest: "ابدأ الاختبار",
+    next: "التالي",
+    previous: "السابق",
+    finishTest: "إنهاء الاختبار",
+    pleaseAnswerHonestly: "يرجى الإجابة بصدق - لا توجد إجابات صحيحة أو خاطئة.",
+    yourAnswersPrivate: "إجاباتك خاصة وآمنة.",
+    questionOf: "السؤال {current} من {total}",
+    answerRequired: "* الإجابة مطلوبة",
+    pleaseSelectAnswer: "يرجى اختيار إجابة.",
+    loginAgain: "يرجى تسجيل الدخول مرة أخرى.",
+    noQuestions: "لم يتم العثور على أسئلة لهذا الاختبار.",
+    bookWhatsapp: "حجز جلسة",
+    askSamiha: "اسأل سميحة",
+    takeAnotherTest: "إجراء اختبار آخر",
+    readFullExplanation: "اقرأ الشرح الكامل",
+    completedOn: "تم الإكمال في {date}",
+    leavePageTitle: "مغادرة هذه الصفحة؟",
+    leavePageDesc: "إذا غادرت الآن، فستبقى نتيجتك محفوظة، ولكنك ستخرج من هذه الشاشة.",
+    confirmLeave: "نعم، غادر",
+    cancelLeave: "البقاء هنا",
+    previousResults: "نتائجك السابقة",
+    previousResultsDesc: "سجل اختبارات الشخصية المكتملة",
+    viewDetails: "عرض التفاصيل",
+    downloadPdf: "تحميل PDF",
+    close: "إغلاق",
+    submitConfirmTitle: "إرسال الاختبار؟",
+    submitConfirmDesc: "هل أنت متأكد أنك تريد إرسال إجاباتك؟",
+    confirmSubmit: "نعم، إرسال",
+    cancelSubmit: "ليس بعد",
+    whatsappText: "مرحباً سميحة 👋 لقد تلقيت للتو نتائج اختبار الشخصية الخاص بي وأود حجز جلسة لمناقشتها.",
+    backHome: "العودة للرئيسية",
+    personalityTests: "اختبارات الشخصية",
+    personalityAssessments: "تقييمات الشخصية",
+    testsIntro: "يرجى اختيار اختبار لبدء رحلة اكتشاف الذات."
+
+  },
+  fr: {
+    loadingTests: "Chargement des tests...",
+    failedToLoadTests: "Échec du chargement des tests.",
+    startTest: "Commencer le test",
+    next: "Suivant",
+    previous: "Précédent",
+    finishTest: "Terminer le test",
+    pleaseAnswerHonestly: "Veuillez répondre honnêtement — il n'y a pas de bonnes ou de mauvaises réponses.",
+    yourAnswersPrivate: "Vos réponses sont privées et sécurisées.",
+    questionOf: "Question {current} sur {total}",
+    answerRequired: "* Réponse requise",
+    pleaseSelectAnswer: "Veuillez sélectionner une réponse.",
+    loginAgain: "Veuillez vous reconnecter.",
+    noQuestions: "Aucune question trouvée pour ce test.",
+    bookWhatsapp: "Réserver une séance",
+    askSamiha: "Demander à Samiha",
+    takeAnotherTest: "Faire un autre test",
+    readFullExplanation: "Lire l'explication complète",
+    completedOn: "Terminé le {date}",
+    leavePageTitle: "Quitter cette page ?",
+    leavePageDesc: "Si vous quittez maintenant, votre résultat reste enregistré, mais vous sortirez de cet écran.",
+    confirmLeave: "Oui, quitter",
+    cancelLeave: "Rester ici",
+    previousResults: "Vos résultats précédents",
+    previousResultsDesc: "Historique de vos tests de personnalité complétés",
+    viewDetails: "Voir les détails",
+    downloadPdf: "Télécharger le PDF",
+    close: "Fermer",
+    submitConfirmTitle: "Soumettre le test ?",
+    submitConfirmDesc: "Êtes-vous sûr de vouloir soumettre vos réponses ?",
+    confirmSubmit: "Oui, soumettre",
+    cancelSubmit: "Pas encore",
+    whatsappText: "Bonjour Samiha 👋 Je viens de recevoir les résultats de mon test de personnalité et j'aimerais réserver une séance pour en discuter.",
+    backHome: "Retour à l'accueil",
+    personalityTests: "Tests de Personnalité",
+    personalityAssessments: "Évaluations de Personnalité",
+    testsIntro: "Veuillez choisir un test pour commencer votre voyage de découverte de soi."
+  }
+};
+
+let currentLanguage = localStorage.getItem("selectedLanguage") || "en";
+
+function tr(key, params = {}) {
+  let text = translations[currentLanguage]?.[key] || translations.en?.[key] || key;
+  Object.keys(params).forEach(p => {
+    text = text.replace(`{${p}}`, params[p]);
+  });
+  return text;
+}
+
+function applyTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    el.textContent = tr(key);
+  });
+  // Handle RTL for Arabic
+  document.documentElement.dir = currentLanguage === "ar" ? "rtl" : "ltr";
+}
+
+/* ===============================
    SAFETY CHECK
 ================================ */
 if (!window.ADMIN_ENV || !ADMIN_ENV.API_BASE_URL) {
@@ -34,8 +174,6 @@ let CURRENT_ANSWERS = {}; // { [questionId]: { index } }
    CONSTANTS
 ================================ */
 const WHATSAPP_NUMBER = "96103960540";
-const WHATSAPP_TEXT =
-  "Hello Samiha 👋 I just received my personality test results and I’d like to book a session to discuss them.";
 
 /* ===============================
    HELPERS
@@ -56,7 +194,7 @@ function escapeHtml(str) {
 function formatDateTime(iso) {
   if (!iso) return "";
   try {
-    return new Date(iso).toLocaleString();
+    return new Date(iso).toLocaleString(currentLanguage);
   } catch {
     return "";
   }
@@ -65,18 +203,12 @@ function formatDateTime(iso) {
 function formatDate(iso) {
   if (!iso) return "";
   try {
-    return new Date(iso).toLocaleDateString();
+    return new Date(iso).toLocaleDateString(currentLanguage);
   } catch {
     return "";
   }
 }
 
-/**
- * ✅ Description formatting:
- * - collapses random line breaks into spaces
- * - keeps "1) 2) 3) ..." as new lines
- * - shows as clean paragraphs with good readability
- */
 function formatDescriptionHtml(text) {
   if (!text) return "";
   const cleaned = escapeHtml(text)
@@ -98,12 +230,9 @@ async function ensureUserId() {
 }
 
 function whatsappLink() {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    WHATSAPP_TEXT
-  )}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(tr("whatsappText"))}`;
 }
 
-/* ✅ Ask Samiha shortcut (keeps your nav system) */
 function goAskSamiha() {
   const btn = document.querySelector('.nav-item[data-section="questions"]');
   if (btn) btn.click();
@@ -114,18 +243,21 @@ function goAskSamiha() {
 ================================ */
 function btnPrimary() {
   return `
-    padding:14px 20px;
-    border-radius:12px;
-    background:#8B7355;
-    color:#fff;
+    padding:16px 40px;
+    border-radius:35px;
+    background:linear-gradient(135deg,#fff4c2,#f4d35e,#d4af37,#c9a227,#fff4c2);
+    color:#033A35;
     border:none;
     font-size:1rem;
-    font-weight:700;
+    font-weight:800;
     cursor:pointer;
     text-decoration:none;
     display:inline-flex;
     align-items:center;
-    gap:8px;
+    justify-content:center;
+    gap:10px;
+    box-shadow:0 10px 25px rgba(212,175,55,0.35);
+    transition:all 0.3s ease;
   `;
 }
 
@@ -178,8 +310,8 @@ function ensureHistoryContainers() {
 
   wrap.innerHTML = `
     <div class="results-header">
-      <h2>Your Previous Results</h2>
-      <p>History of your completed personality tests</p>
+      <h2 data-i18n="previousResults">${tr("previousResults")}</h2>
+      <p data-i18n="previousResultsDesc">${tr("previousResultsDesc")}</p>
     </div>
 
     <div id="previousDiagnosesList"
@@ -199,7 +331,7 @@ async function loadUserTests() {
 
   if (!listEl || !statusEl) return;
 
-  statusEl.textContent = "Loading tests...";
+  statusEl.textContent = tr("loadingTests");
   listEl.innerHTML = "";
 
   try {
@@ -217,14 +349,15 @@ async function loadUserTests() {
         <h3>${escapeHtml(test.name)}</h3>
         <p>${escapeHtml(test.description || "")}</p>
         <button style="${btnPrimary()}" onclick="startTest(${test.id})">
-          Start Test
+          ${tr("startTest")}
         </button>
       `;
 
       listEl.appendChild(card);
     });
+    applyTranslations();
   } catch {
-    statusEl.textContent = "Failed to load tests.";
+    statusEl.textContent = tr("failedToLoadTests");
   }
 }
 
@@ -232,32 +365,49 @@ async function loadUserTests() {
    START TEST
 ================================ */
 async function startTest(testId) {
+  
   const userId = await ensureUserId();
-  if (!userId) return alert("Please login again.");
+  if (!userId) return alert(tr("loginAgain"));
 
   CURRENT_TEST_ID = testId;
   CURRENT_Q_INDEX = 0;
   CURRENT_ANSWERS = {};
 
-  // Create session
   const sessionRes = await fetch(`${ADMIN_ENV.API_BASE_URL}/sessions`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ user_id: userId, test_id: testId }),
   });
 
-  const session = await sessionRes.json();
-  CURRENT_SESSION_ID = session.id || session.session_id;
+  const sessionResponse = await sessionRes.json();
 
-  // Load questions
+console.log("🧪 SESSION CREATE RESPONSE:", sessionResponse);
+
+// ✅ FIX: extract nested session id
+CURRENT_SESSION_ID =
+  sessionResponse?.session?.id ||
+  sessionResponse?.id ||
+  sessionResponse?.session_id ||
+  null;
+
+if (!CURRENT_SESSION_ID) {
+  console.error("❌ Session ID missing after creation");
+  alert("Session could not be created. Please try again.");
+  return;
+}
+
+console.log("✅ CURRENT_SESSION_ID SET TO:", CURRENT_SESSION_ID);
+
+
   const qRes = await fetch(`${ADMIN_ENV.API_BASE_URL}/tests/${testId}`);
   const raw = await qRes.json();
   CURRENT_QUESTIONS = Array.isArray(raw) ? raw : raw.questions || [];
 
   if (!Array.isArray(CURRENT_QUESTIONS) || CURRENT_QUESTIONS.length === 0) {
-    alert("No questions found for this test.");
+    alert(tr("noQuestions"));
     return;
   }
+  
 
   renderTestUI();
 }
@@ -270,130 +420,120 @@ function renderTestUI() {
 
   section.innerHTML = `
     <div class="results-header">
-      <h2>${escapeHtml(CURRENT_QUESTIONS[0]?.name || "Test")}</h2>
-      <p>Please answer honestly — there are no right or wrong answers.</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:30px;flex-wrap:wrap;">
+        <div>
+          <h2 style="margin:0;font-family:'Playfair Display', serif;color:#033A35;">
+            ${escapeHtml(CURRENT_QUESTIONS[0]?.name || "Test")}
+          </h2>
+          <p data-i18n="pleaseAnswerHonestly" style="margin:6px 0 0;color:#555;">${tr("pleaseAnswerHonestly")}</p>
+        </div>
+        <div id="testTimer" style="background:#E6D6A7;padding:10px 22px;border-radius:30px;font-weight:800;color:#033A35;border:2px solid #D4AF37;font-size:0.95rem;white-space:nowrap;">
+          ⏱ 00:00
+        </div>
+      </div>
     </div>
 
     <div style="max-width:760px;margin:auto;">
-      <!-- Progress line + text -->
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
         <div id="progressText" style="color:#777;font-size:0.95rem;font-weight:600;"></div>
-        <div style="color:#777;font-size:0.9rem;">
-          Your answers are private
-        </div>
+        <div data-i18n="yourAnswersPrivate" style="color:#777;font-size:0.9rem;">${tr("yourAnswersPrivate")}</div>
       </div>
 
       <div style="height:10px;background:#eee;border-radius:999px;margin-bottom:18px;overflow:hidden;">
-        <div id="progressBar"
-             style="height:100%;width:0%;background:#8B7355;border-radius:999px;"></div>
+        <div id="progressBar" style="height:100%;width:0%;background:#8B7355;border-radius:999px;"></div>
       </div>
 
-      <div id="questionBox"
-           style="background:#fff;border:1px solid #eee;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);"></div>
-
-      <div style="display:flex;justify-content:space-between;margin-top:18px;gap:12px;flex-wrap:wrap;">
-        <button id="prevBtn" style="${btnSecondary()}" disabled>Previous</button>
-        <button id="nextBtn" style="${btnPrimary()}">Next</button>
+      <div id="questionBox" style="background:#ffffff;border-radius:30px;padding:50px;box-shadow:0 10px 30px rgba(10,56,54,0.12);border:1px solid rgba(0,0,0,0.05);animation:slideUp 0.6s ease-out;">
       </div>
 
-      <p style="margin:12px 0 0;color:#777;font-size:0.9rem;">
-        Tip: choose the option that feels most true right now.
-      </p>
+      <div style="display:flex;justify-content:space-between;margin-top:30px;gap:16px;">
+        <button id="prevBtn" style="${btnSecondary()}" onclick="prevQuestion()">
+          ${tr("previous")}
+        </button>
+        <button id="nextBtn" style="${btnPrimary()}" onclick="nextQuestion()">
+          ${tr("next")}
+        </button>
+      </div>
+    </div>
+
+    <!-- SUBMIT CONFIRM OVERLAY -->
+    <div id="submitConfirmOverlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px;">
+      <div style="background:#fff;border-radius:20px;max-width:420px;width:100%;padding:28px;box-shadow:0 15px 40px rgba(0,0,0,0.25);text-align:center;">
+        <h3 data-i18n="submitConfirmTitle" style="margin:0 0 10px;font-family:'Playfair Display', serif;color:#033A35;">${tr("submitConfirmTitle")}</h3>
+        <p data-i18n="submitConfirmDesc" style="color:#555;font-size:0.95rem;line-height:1.6;margin:0;">${tr("submitConfirmDesc")}</p>
+        <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <button id="confirmSubmitBtn" style="${btnPrimary()}">${tr("confirmSubmit")}</button>
+          <button id="cancelSubmitBtn" style="${btnSecondary()}">${tr("cancelSubmit")}</button>
+        </div>
+      </div>
     </div>
   `;
-
-  document.getElementById("prevBtn").onclick = prevQuestion;
-  document.getElementById("nextBtn").onclick = nextQuestion;
-
   renderQuestion();
 }
 
 function renderQuestion() {
   const q = CURRENT_QUESTIONS[CURRENT_Q_INDEX];
   const box = document.getElementById("questionBox");
-
   const total = CURRENT_QUESTIONS.length;
   const idx = CURRENT_Q_INDEX + 1;
-  const progress = (idx / total) * 100;
 
-  const progressBar = document.getElementById("progressBar");
-  const progressText = document.getElementById("progressText");
-  if (progressBar) progressBar.style.width = `${progress}%`;
-  if (progressText) progressText.textContent = `Question ${idx} of ${total}`;
+  // Progress
+  document.getElementById("progressText").textContent = tr("questionOf", { current: idx, total: total });
+  document.getElementById("progressBar").style.width = `${(idx / total) * 100}%`;
 
-  const saved = CURRENT_ANSWERS[q.id]?.index || null;
-
-  const choicesHtml = Object.entries(q.choices || {})
-    .map(([k, v]) => {
-      const isSelected = saved === k;
-      const border = isSelected ? "2px solid #8B7355" : "1px solid #eee";
-      const bg = isSelected ? "#faf7f3" : "#fff";
-
-      return `
-        <label style="
-          display:block;
-          margin:12px 0;
-          padding:14px 14px;
-          border:${border};
-          border-radius:14px;
-          cursor:pointer;
-          background:${bg};
-          transition:background 0.15s ease;
-        ">
-          <input type="radio" name="q" value="${escapeHtml(k)}" style="margin-right:10px;" ${
-            isSelected ? "checked" : ""
-          }>
-          <strong style="color:#8B7355;">${escapeHtml(k.toUpperCase())}.</strong>
-          <span style="color:#333;">${escapeHtml(v)}</span>
-        </label>`;
-    })
-    .join("");
+  const saved = CURRENT_ANSWERS[q.id]?.index;
+  const choicesHtml = Object.entries(q.choices || {}).map(([k, v]) => {
+    const isSelected = saved === k;
+    return `
+      <button type="button" data-value="${escapeHtml(k)}" style="width:100%;padding:24px 35px;background:${isSelected ? "#033A35" : "#E6D6A7"};border:2px solid ${isSelected ? "#D4AF37" : "rgba(0,0,0,0.08)"};border-radius:20px;font-size:1.15rem;font-weight:600;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;color:${isSelected ? "#fff" : "#011514"};transition:all 0.25s ease;">
+        <span>${escapeHtml(v)}</span>
+        <span style="font-size:1.5rem;opacity:${isSelected ? 1 : 0};">›</span>
+      </button>
+    `;
+  }).join("");
 
   box.innerHTML = `
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start;">
-      <h3 style="margin:0;color:#333;line-height:1.35;">
+      <h3 style="font-family:'Playfair Display', serif;font-size:2.2rem;color:#033A35;margin-bottom:40px;text-align:center;">
         ${escapeHtml(q.question)}
       </h3>
-      <span style="color:#999;font-size:0.85rem;">Answer required</span>
+      <span style="color:#999;font-size:0.85rem;" data-i18n="answerRequired">${tr("answerRequired")}</span>
     </div>
-    <div style="margin-top:10px;">
-      ${choicesHtml || `<p style="color:#B00020;">No choices found for this question.</p>`}
+    <div style="display:flex;flex-direction:column;gap:24px;max-width:600px;margin:0 auto;">
+      ${choicesHtml}
     </div>
   `;
 
-  // Update buttons
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   if (prevBtn) prevBtn.disabled = CURRENT_Q_INDEX === 0;
+  if (nextBtn) nextBtn.textContent = CURRENT_Q_INDEX < total - 1 ? tr("next") : tr("finishTest");
 
-  if (nextBtn) {
-    nextBtn.textContent =
-      CURRENT_Q_INDEX < CURRENT_QUESTIONS.length - 1 ? "Next" : "Finish Test";
-  }
-
-  // Small UX: selecting option immediately re-renders to show highlighted border/bg
-  box.querySelectorAll("input[name='q']").forEach((radio) => {
-    radio.addEventListener("change", () => {
-      CURRENT_ANSWERS[q.id] = { index: radio.value };
-      renderQuestion();
+  box.querySelectorAll("button[data-value]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      CURRENT_ANSWERS[q.id] = { index: btn.dataset.value.toUpperCase() };
+    
+      setTimeout(() => {
+        if (CURRENT_Q_INDEX < total - 1) {
+          CURRENT_Q_INDEX++;
+          renderQuestion();
+        } else {
+          openSubmitConfirm();
+        }
+      }, 200);
     });
   });
 }
 
 function nextQuestion() {
-  const q = CURRENT_QUESTIONS[CURRENT_Q_INDEX];
-  const selected = document.querySelector("input[name='q']:checked");
-
-  if (!selected) return alert("Please select an answer.");
-
-  // Save current answer
-  CURRENT_ANSWERS[q.id] = { index: selected.value };
-
+  if (!CURRENT_ANSWERS[CURRENT_QUESTIONS[CURRENT_Q_INDEX].id]) {
+    return alert(tr("pleaseSelectAnswer"));
+  }
   if (CURRENT_Q_INDEX < CURRENT_QUESTIONS.length - 1) {
     CURRENT_Q_INDEX++;
     renderQuestion();
   } else {
-    submitTest();
+    openSubmitConfirm();
   }
 }
 
@@ -404,124 +544,131 @@ function prevQuestion() {
   }
 }
 
-/* ===============================
-   SUBMIT TEST
-================================ */
+function openSubmitConfirm() {
+  const overlay = document.getElementById("submitConfirmOverlay");
+  if (overlay) overlay.style.display = "flex";
+}
+
+function closeSubmitConfirm() {
+  const overlay = document.getElementById("submitConfirmOverlay");
+  if (overlay) overlay.style.display = "none";
+}
+
 async function submitTest() {
   try {
+    console.group("🧪 TEST SUBMISSION DEBUG");
+console.log("Session ID:", CURRENT_SESSION_ID);
+console.log("Test ID:", CURRENT_TEST_ID);
+console.log("Raw Answers Object:", CURRENT_ANSWERS);
+
+// Flatten answers for easy reading
+const flatAnswers = Object.entries(CURRENT_ANSWERS).map(([qid, obj]) => ({
+  question_id: qid,
+  selected: obj?.index,
+  type: typeof obj?.index,
+}));
+
+console.table(flatAnswers);
+
+// Count letters (this mirrors backend logic)
+const counts = {};
+flatAnswers.forEach(a => {
+  if (!a.selected) return;
+  counts[a.selected] = (counts[a.selected] || 0) + 1;
+});
+console.log("Letter counts:", counts);
+
+console.groupEnd();
+
     await fetch(`${ADMIN_ENV.API_BASE_URL}/sessions/${CURRENT_SESSION_ID}/submit`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ answers: CURRENT_ANSWERS }),
     });
-
     const userId = await ensureUserId();
-    if (!userId) return;
-
-    await loadLatestDiagnosis(userId);
-    await loadAllDiagnoses(userId);
+    if (userId) await loadLatestDiagnosis(userId);
   } catch (e) {
     console.error(e);
-    alert("Something went wrong submitting your test. Please try again.");
+    alert(tr("failedToLoadTests"));
   }
 }
 
-/* ===============================
-   LOAD LATEST DIAGNOSIS
-================================ */
 async function loadLatestDiagnosis(userId) {
   const res = await fetch(`${ADMIN_ENV.API_BASE_URL}/diagnoses/${userId}`);
   const data = await res.json();
-
   const latest = data.diagnoses?.[0];
-  if (!latest) return;
-
-  showDiagnosisResult(latest);
+  if (latest) showDiagnosisResult(latest);
 }
 
-/* ===============================
-   DISPLAY RESULT (UPDATED + CLEAR)
-================================ */
 function showDiagnosisResult(d) {
   const section = document.getElementById("tests");
-
-  const dateStr = d.test_completed_at ? formatDateTime(d.test_completed_at) : "";
+  const dateStr = d.test_completed_at ? formatDate(d.test_completed_at) : "";
 
   section.innerHTML = `
-    <div class="results-header">
-      <h2>Your Personality Insight</h2>
-      <p>Take a moment to read your result — there’s no rush.</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:30px;flex-wrap:wrap;">
+      <div>
+        <h2 style="margin:0;font-family:'Playfair Display', serif;color:#033A35;">${escapeHtml(d.test_name)}</h2>
+        <p style="margin:6px 0 0;color:#555;">${tr("pleaseAnswerHonestly")}</p>
+      </div>
     </div>
 
-    <div style="
-      max-width:820px;
-      margin:20px auto 0;
-      background:#fff;
-      padding:26px;
-      border-radius:16px;
-      box-shadow:0 4px 18px rgba(0,0,0,0.08);
-      border:1px solid #eee;
-    ">
+    <div style="max-width:820px;margin:20px auto 0;background:#fff;padding:26px;border-radius:16px;box-shadow:0 4px 18px rgba(0,0,0,0.08);border:1px solid #eee;">
       <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end;">
         <h3 style="margin:0;color:#8B7355;">${escapeHtml(d.test_name)}</h3>
-        ${dateStr ? `<span style="color:#777;font-size:0.85rem;">Completed on ${escapeHtml(
-          dateStr
-        )}</span>` : ""}
+        ${dateStr ? `<span style="color:#777;font-size:0.85rem;">${tr("completedOn", { date: dateStr })}</span>` : ""}
       </div>
 
-      <div style="
-        margin-top:12px;
-        font-size:1.15rem;
-        font-weight:800;
-        color:#333;
-        line-height:1.55;
-      ">
-        ${escapeHtml(d.diagnosis_text)}
+      <details style="margin-top:24px;background:#faf7f3;padding:18px;border-radius:14px;border-left:4px solid #D4AF37;">
+        <summary style="cursor:pointer;font-weight:700;color:#033A35;margin-bottom:10px;">${tr("readFullExplanation")}</summary>
+        <div style="margin-top:10px;line-height:1.85;">${formatDescriptionHtml(d.description)}</div>
+      </details>
+
+      <p style="margin:14px 0 0;color:#666;font-size:0.92rem;">${tr("leavePageDesc")}</p>
+
+      <div style="margin-top:18px;display:flex;gap:14px;flex-wrap:wrap;">
+        <a href="${whatsappLink()}" target="_blank" style="${btnPrimary()}">${tr("bookWhatsapp")}</a>
+        <button type="button" style="${btnPrimary()}" onclick="confirmLeave(() => goAskSamiha())">${tr("askSamiha")}</button>
+        <button type="button" style="${btnPrimary()}" onclick="confirmLeave(() => window.location.reload())">${tr("takeAnotherTest")}</button>
       </div>
+    </div>
 
-      <div style="
-        margin-top:14px;
-        background:#faf7f3;
-        padding:18px;
-        border-left:4px solid #8B7355;
-        border-radius:12px;
-        line-height:1.85;
-        color:#333;
-        font-size:0.98rem;
-        overflow-wrap:anywhere;
-      ">
-        ${formatDescriptionHtml(d.description)}
-      </div>
-
-      <p style="margin:14px 0 0;color:#666;font-size:0.92rem;">
-        If you'd like, you can discuss this result in a private session.
-      </p>
-
-      <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="${whatsappLink()}" target="_blank" style="${btnPrimary()}">
-          Book a Session on WhatsApp
-        </a>
-
-        <button type="button" onclick="openPrintPdfForLatest()" style="${btnSecondary()}">
-          Download PDF
-        </button>
-
-        <button type="button" onclick="goAskSamiha()" style="${btnTertiary()}">
-           Ask Samiha
-        </button>
+    <!-- LEAVE CONFIRM MODAL -->
+    <div id="leaveConfirmOverlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px;">
+      <div style="background:#fff;border-radius:20px;max-width:420px;width:100%;padding:28px;box-shadow:0 15px 40px rgba(0,0,0,0.25);text-align:center;">
+        <h3 style="margin:0 0 10px;font-family:'Playfair Display', serif;color:#033A35;">${tr("leavePageTitle")}</h3>
+        <p style="color:#555;font-size:0.95rem;line-height:1.6;margin:0;">${tr("leavePageDesc")}</p>
+        <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <button id="confirmLeaveBtn" style="${btnPrimary()}">${tr("confirmLeave")}</button>
+          <button id="cancelLeaveBtn" style="${btnSecondary()}">${tr("cancelLeave")}</button>
+        </div>
       </div>
     </div>
   `;
-
   window.__LATEST_DIAGNOSIS__ = d;
 }
 
-/* ===============================
-   PREVIOUS RESULTS (UPDATED CTAs)
-================================ */
+let PENDING_REDIRECT = null;
+function confirmLeave(redirectFn) {
+  PENDING_REDIRECT = redirectFn;
+  const overlay = document.getElementById("leaveConfirmOverlay");
+  if (overlay) overlay.style.display = "flex";
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target?.id === "confirmSubmitBtn") {
+    closeSubmitConfirm();
+    submitTest();
+  }
+  if (e.target?.id === "cancelSubmitBtn") closeSubmitConfirm();
+  if (e.target?.id === "confirmLeaveBtn") {
+    document.getElementById("leaveConfirmOverlay").style.display = "none";
+    if (typeof PENDING_REDIRECT === "function") PENDING_REDIRECT();
+  }
+  if (e.target?.id === "cancelLeaveBtn") document.getElementById("leaveConfirmOverlay").style.display = "none";
+});
+
 async function loadAllDiagnoses(userId) {
   ensureHistoryContainers();
-
   const wrap = document.getElementById("previousDiagnosesWrap");
   const list = document.getElementById("previousDiagnosesList");
 
@@ -530,62 +677,27 @@ async function loadAllDiagnoses(userId) {
   const diagnoses = data.diagnoses || [];
 
   if (diagnoses.length === 0) return;
-
   wrap.style.display = "block";
   list.innerHTML = "";
 
   diagnoses.forEach((d) => {
     const card = document.createElement("div");
-    card.style.cssText = `
-      background:#fff;
-      border-radius:14px;
-      padding:16px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.08);
-      border:1px solid #eee;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    `;
-
+    card.style.cssText = "background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,0.08);border:1px solid #eee;display:flex;flex-direction:column;gap:10px;";
     card.innerHTML = `
       <h4 style="margin:0;color:#8B7355;">${escapeHtml(d.test_name)}</h4>
-      <p style="margin:0;font-weight:700;color:#333;line-height:1.5;">
-        ${escapeHtml(d.diagnosis_text)}
-      </p>
-      <p style="margin:0;font-size:0.85rem;color:#777;">
-        Completed on ${escapeHtml(formatDate(d.test_completed_at))}
-      </p>
-
+      <p style="margin:0;font-weight:700;color:#333;line-height:1.5;">${escapeHtml(d.diagnosis_text)}</p>
+      <p style="margin:0;font-size:0.85rem;color:#777;">${tr("completedOn", { date: formatDate(d.test_completed_at) })}</p>
       <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
-        <button type="button"
-          onclick='viewDiagnosisDetails(${JSON.stringify(d).replaceAll("'", "\\'")})'
-          style="${btnSecondary()}">
-          View Details
-        </button>
-
-        <button type="button"
-          onclick='downloadDiagnosisPDF(${JSON.stringify(d).replaceAll("'", "\\'")})'
-          style="${btnSecondary()}">
-          Download PDF
-        </button>
-
-        <a href="${whatsappLink()}" target="_blank" style="${btnPrimary()}">
-           Book Session
-        </a>
-
-        <button type="button" onclick="goAskSamiha()" style="${btnTertiary()}">
-           Ask Samiha
-        </button>
+        <button type="button" onclick='viewDiagnosisDetails(${JSON.stringify(d).replaceAll("'", "\\'")})' style="${btnSecondary()}">${tr("viewDetails")}</button>
+        <button type="button" onclick='downloadDiagnosisPDF(${JSON.stringify(d).replaceAll("'", "\\'")})' style="${btnSecondary()}">${tr("downloadPdf")}</button>
+        <a href="${whatsappLink()}" target="_blank" style="${btnPrimary()}">${tr("bookWhatsapp")}</a>
+        <button type="button" onclick="goAskSamiha()" style="${btnTertiary()}">${tr("askSamiha")}</button>
       </div>
     `;
-
     list.appendChild(card);
   });
 }
 
-/* ===============================
-   DETAILS MODAL (UPDATED + CTAs)
-================================ */
 function viewDiagnosisDetails(d) {
   const overlayId = "diagnosisDetailsOverlay";
   const existing = document.getElementById(overlayId);
@@ -593,80 +705,39 @@ function viewDiagnosisDetails(d) {
 
   const overlay = document.createElement("div");
   overlay.id = overlayId;
-  overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px;";
+  overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px;";
 
   const card = document.createElement("div");
-  card.style.cssText =
-    "max-width:820px;width:100%;background:#fff;border-radius:16px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,0.18);";
+  card.style.cssText = "max-width:820px;width:100%;background:#fff;border-radius:16px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,0.18);";
 
   card.innerHTML = `
     <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
       <h3 style="margin:0;color:#8B7355;">${escapeHtml(d.test_name)}</h3>
-      <button type="button" id="closeDiagnosisModalBtn"
-              style="border:none;background:transparent;font-size:20px;cursor:pointer;padding:6px 10px;border-radius:10px;">
-        ✕
-      </button>
+      <button type="button" id="closeDiagnosisModalBtn" style="border:none;background:transparent;font-size:20px;cursor:pointer;padding:6px 10px;border-radius:10px;">✕</button>
     </div>
-
-    <p style="margin:10px 0 6px;font-weight:800;color:#333;line-height:1.55;">
-      ${escapeHtml(d.diagnosis_text)}
-    </p>
-
-    <p style="margin:0 0 12px;color:#777;font-size:0.9rem;">
-      Completed on ${escapeHtml(formatDateTime(d.test_completed_at))}
-    </p>
-
-    <div style="background:#faf7f3;padding:16px;border-left:4px solid #8B7355;border-radius:12px;line-height:1.85;">
-      ${formatDescriptionHtml(d.description)}
-    </div>
-
+    <p style="margin:10px 0 6px;font-weight:800;color:#333;line-height:1.55;">${escapeHtml(d.diagnosis_text)}</p>
+    <p style="margin:0 0 12px;color:#777;font-size:0.9rem;">${tr("completedOn", { date: formatDateTime(d.test_completed_at) })}</p>
+    <div style="background:#faf7f3;padding:16px;border-left:4px solid #8B7355;border-radius:12px;line-height:1.85;">${formatDescriptionHtml(d.description)}</div>
     <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
-      <button type="button" id="closeBtn2" style="${btnSecondary()}">Close</button>
-
-      <button type="button"
-        onclick='downloadDiagnosisPDF(${JSON.stringify(d).replaceAll("'", "\\'")})'
-        style="${btnSecondary()}">
-        Download PDF
-      </button>
-
-      <a href="${whatsappLink()}" target="_blank" style="${btnPrimary()}">
-         Book Session
-      </a>
-
-      <button type="button" onclick="goAskSamiha()" style="${btnTerti()}">
-        Ask Samiha
-      </button>
+      <button type="button" id="closeBtn2" style="${btnSecondary()}">${tr("close")}</button>
+      <button type="button" onclick='downloadDiagnosisPDF(${JSON.stringify(d).replaceAll("'", "\\'")})' style="${btnSecondary()}">${tr("downloadPdf")}</button>
+      <a href="${whatsappLink()}" target="_blank" style="${btnPrimary()}">${tr("bookWhatsapp")}</a>
+      <button type="button" onclick="goAskSamiha()" style="${btnTertiary()}">${tr("askSamiha")}</button>
     </div>
   `;
 
   overlay.appendChild(card);
   document.body.appendChild(overlay);
-
   const close = () => overlay.remove();
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) close();
-  });
-
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
   card.querySelector("#closeDiagnosisModalBtn").addEventListener("click", close);
   card.querySelector("#closeBtn2").addEventListener("click", close);
 }
 
-/* ===============================
-   PDF EXPORT (PRINT-TO-PDF)
-================================ */
-function openPrintPdfForLatest() {
-  downloadDiagnosisPDF(window.__LATEST_DIAGNOSIS__);
-}
-
 function downloadDiagnosisPDF(d) {
   if (!d) return alert("No diagnosis available to download.");
-
   const w = window.open("", "_blank");
-  if (!w) {
-    alert("Popup blocked. Please allow popups to download PDF.");
-    return;
-  }
+  if (!w) return alert("Popup blocked. Please allow popups to download PDF.");
 
   w.document.open();
   w.document.write(`
@@ -675,57 +746,45 @@ function downloadDiagnosisPDF(d) {
         <meta charset="utf-8"/>
         <title>${escapeHtml(d.test_name)}</title>
         <style>
-          body { font-family: Arial, sans-serif; padding: 30px; color:#222; }
+          body { font-family: Arial, sans-serif; padding: 30px; color:#222; direction: ${currentLanguage === 'ar' ? 'rtl' : 'ltr'}; }
           h1 { margin:0 0 10px; }
           h3 { margin:0 0 14px; }
-          .box {
-            background:#faf7f3;
-            border-left:4px solid #8B7355;
-            padding:14px;
-            border-radius:10px;
-            line-height:1.8;
-            white-space:pre-wrap;
-          }
+          .box { background:#faf7f3; border-left:4px solid #8B7355; padding:14px; border-radius:10px; line-height:1.8; white-space:pre-wrap; }
           .meta { color:#666; margin-bottom:16px; }
           @media print { button { display:none; } }
         </style>
       </head>
       <body>
         <h1>${escapeHtml(d.test_name)}</h1>
-        <div class="meta">Completed on: ${escapeHtml(
-          formatDateTime(d.test_completed_at || d.created_at || "")
-        )}</div>
-
+        <div class="meta">${tr("completedOn", { date: formatDateTime(d.test_completed_at || d.created_at || "") })}</div>
         <h3>${escapeHtml(d.diagnosis_text)}</h3>
-
         <div class="box">${escapeHtml(safeText(d.description))}</div>
-
-        <p style="margin-top:18px;color:#666;">
-          Tip: In the print dialog, choose <b>Save as PDF</b>.
-        </p>
-
-        <button onclick="window.print()"
-          style="padding:10px 14px;border:none;border-radius:10px;background:#8B7355;color:#fff;font-weight:700;cursor:pointer;">
-          Print / Save as PDF
-        </button>
+        <button onclick="window.print()" style="margin-top:20px;padding:10px 14px;border:none;border-radius:10px;background:#8B7355;color:#fff;font-weight:700;cursor:pointer;">Print / Save as PDF</button>
       </body>
     </html>
   `);
   w.document.close();
-
-  setTimeout(() => {
-    try {
-      w.print();
-    } catch {}
-  }, 300);
+  setTimeout(() => { try { w.print(); } catch {} }, 300);
 }
 
-/* ===============================
-   AUTO LOAD
-================================ */
 document.addEventListener("DOMContentLoaded", async () => {
+  const langSelect = document.getElementById("languageSelect");
+  if (langSelect) {
+    langSelect.value = currentLanguage;
+    langSelect.addEventListener("change", (e) => {
+      currentLanguage = e.target.value;
+      localStorage.setItem("selectedLanguage", currentLanguage);
+      applyTranslations();
+      if (CURRENT_QUESTIONS.length > 0) {
+        if (CURRENT_SESSION_ID && !window.__LATEST_DIAGNOSIS__) renderTestUI();
+        else if (window.__LATEST_DIAGNOSIS__) showDiagnosisResult(window.__LATEST_DIAGNOSIS__);
+      } else {
+        loadUserTests();
+      }
+    });
+  }
+  applyTranslations();
   await loadUserTests();
   const userId = await ensureUserId();
-  if (userId) loadAllDiagnoses(userId);
+  //if (userId) loadAllDiagnoses(userId);
 });
-
