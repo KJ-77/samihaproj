@@ -236,8 +236,8 @@ function whatsappLink() {
 }
 
 function goAskSamiha() {
-  const btn = document.querySelector('.nav-item[data-section="questions"]');
-  if (btn) btn.click();
+  // Redirect directly to the personalized questions page
+  window.location.href = "personalized-questions.html";
 }
 
 /* ===============================
@@ -537,22 +537,26 @@ function renderQuestion() {
   const saved = CURRENT_ANSWERS[q.id]?.index;
   const choicesHtml = Object.entries(q.choices || {}).map(([k, v]) => {
     const isSelected = saved === k;
+    // Map keys to A, B, C, D, E
+    const labelMap = { 'A': 'A', 'B': 'B', 'C': 'C', 'D': 'D', 'E': 'E' };
+    const label = labelMap[k.toUpperCase()] || k;
+    
     return `
-      <button type="button" data-value="${escapeHtml(k)}" style="width:100%;padding:24px 35px;background:${isSelected ? "#033A35" : "#E6D6A7"};border:2px solid ${isSelected ? "#D4AF37" : "rgba(0,0,0,0.08)"};border-radius:20px;font-size:1.15rem;font-weight:600;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;color:${isSelected ? "#fff" : "#011514"};transition:all 0.25s ease;">
-        <span>${escapeHtml(v)}</span>
-        <span style="font-size:1.5rem;opacity:${isSelected ? 1 : 0};">›</span>
+      <button type="button" data-value="${escapeHtml(k)}" style="width:100%;padding:15px 0;background:transparent;border:none;font-size:1.1rem;font-family:'Lato', sans-serif;font-weight:400;cursor:pointer;text-align:left;display:flex;align-items:center;gap:18px;color:${isSelected ? "#D4AF37" : "#011514"};transition:all 0.2s ease;outline:none;">
+        <span style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1.5px solid ${isSelected ? "#D4AF37" : "#033A35"};background:${isSelected ? "#D4AF37" : "transparent"};color:${isSelected ? "#033A35" : "#033A35"};font-weight:700;font-size:1rem;flex-shrink:0;">${label}</span>
+        <span style="line-height:1.5;${isSelected ? "font-weight:700;" : ""}">${escapeHtml(v)}</span>
       </button>
     `;
   }).join("");
 
-  box.innerHTML = `
-    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start;">
-      <h3 style="font-family:'Playfair Display', serif;font-size:2.2rem;color:#033A35;margin-bottom:40px;text-align:center;">
+    box.innerHTML = `
+    <div style="text-align:center;margin-bottom:40px;">
+      <h3 style="font-family:'Playfair Display', serif;font-size:1.8rem;color:#033A35;margin-bottom:12px;line-height:1.3;font-weight:700;">
         ${escapeHtml(q.question)}
       </h3>
-      <span style="color:#999;font-size:0.85rem;" data-i18n="answerRequired">${tr("answerRequired")}</span>
+      <p style="color:#8B7355;font-size:0.9rem;font-weight:600;margin:0;letter-spacing:0.5px;text-transform:uppercase;" data-i18n="answerRequired">${tr("answerRequired")}</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:24px;max-width:600px;margin:0 auto;">
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:650px;margin:0 auto;">
       ${choicesHtml}
     </div>
   `;
@@ -564,8 +568,31 @@ function renderQuestion() {
 
   box.querySelectorAll("button[data-value]").forEach((btn) => {
     btn.addEventListener("click", () => {
+      // 1. Immediate visual feedback
+      box.querySelectorAll("button[data-value]").forEach(b => {
+        const circle = b.querySelector('span:first-child');
+        const text = b.querySelector('span:last-child');
+        if (b === btn) {
+          b.style.color = "#D4AF37";
+          if (circle) {
+            circle.style.background = "#D4AF37";
+            circle.style.borderColor = "#D4AF37";
+          }
+          if (text) text.style.fontWeight = "700";
+        } else {
+          b.style.color = "#011514";
+          if (circle) {
+            circle.style.background = "transparent";
+            circle.style.borderColor = "#033A35";
+          }
+          if (text) text.style.fontWeight = "400";
+        }
+      });
+
+      // 2. Save answer
       CURRENT_ANSWERS[q.id] = { index: btn.dataset.value.toUpperCase() };
     
+      // 3. Delay transition for user to see the highlight
       setTimeout(() => {
         if (CURRENT_Q_INDEX < total - 1) {
           CURRENT_Q_INDEX++;
@@ -573,7 +600,7 @@ function renderQuestion() {
         } else {
           openSubmitConfirm();
         }
-      }, 200);
+      }, 400); // Slightly longer delay to appreciate the selection
     });
   });
 }
