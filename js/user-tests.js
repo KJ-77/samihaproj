@@ -340,10 +340,22 @@ async function loadUserTests() {
     const res = await fetch(`${ADMIN_ENV.API_BASE_URL}/tests`);
     if (!res.ok) throw new Error();
 
-    const tests = await res.json();
+    const allTests = await res.json();
     statusEl.textContent = "";
 
-    tests.forEach((test) => {
+    // Filter tests based on current language
+    const filteredTests = allTests.filter(test => {
+      // Check both 'language' and 'languageId' fields from the API
+      const testLang = test.language || test.languageId;
+      if (!testLang) return true;
+      return testLang.toLowerCase() === currentLanguage.toLowerCase();
+    });
+
+    if (filteredTests.length === 0) {
+      statusEl.textContent = tr("noQuestions"); // Or a more specific "No tests in this language"
+    }
+
+    filteredTests.forEach((test) => {
       const card = document.createElement("div");
       card.className = "test-card";
 
@@ -403,7 +415,15 @@ console.log("✅ CURRENT_SESSION_ID SET TO:", CURRENT_SESSION_ID);
 
   const qRes = await fetch(`${ADMIN_ENV.API_BASE_URL}/tests/${testId}`);
   const raw = await qRes.json();
-  CURRENT_QUESTIONS = Array.isArray(raw) ? raw : raw.questions || [];
+  const allQuestions = Array.isArray(raw) ? raw : raw.questions || [];
+
+  // Filter questions based on the current language selected on the website
+  CURRENT_QUESTIONS = allQuestions.filter(q => {
+    // Check both 'language' and 'languageId' fields from the API
+    const qLang = q.language || q.languageId;
+    if (!qLang) return true;
+    return qLang.toLowerCase() === currentLanguage.toLowerCase();
+  });
 
   if (!Array.isArray(CURRENT_QUESTIONS) || CURRENT_QUESTIONS.length === 0) {
     alert(tr("noQuestions"));
