@@ -15,10 +15,10 @@
   <!-- Cognito -->
   <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6/dist/amazon-cognito-identity.min.js"></script>
 
-  <!-- Page polish (safe inline only) -->
+  <!-- Page polish -->
   <style>
     body {
-      background: #f6f4f1;
+      background: #033A35;
     }
 
     .personalized-page-wrapper {
@@ -29,13 +29,15 @@
 
     .personalized-card {
       background: #ffffff;
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 30px;
-      box-shadow: 0 6px 22px rgba(0,0,0,0.06);
+      box-shadow: none;
+      border: none;
     }
 
     .results-header h2 {
       margin-bottom: 6px;
+      font-family: "Playfair Display", serif;
     }
 
     .results-header p {
@@ -97,6 +99,12 @@
       padding: 12px 20px;
       font-weight: 600;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .send-btn:hover {
+      background: #725e45;
+      transform: translateY(-1px);
     }
 
     .send-btn:disabled {
@@ -116,33 +124,71 @@
 
 <!-- HEADER -->
 <header class="dashboard-header">
-  <a href="index.html" class="btn-secondary">⬅ Back to Home</a>
-  <h1>Personalized Questions</h1>
+  <a id="backHomeBtn" href="index.html"
+  style="
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 28px;
+    border-radius:35px;
+    font-weight:800;
+    text-decoration:none;
+    color:#033A35;
+    background:linear-gradient(
+      135deg,
+      #fff4c2,
+      #f4d35e,
+      #d4af37,
+      #c9a227,
+      #fff4c2
+    );
+    box-shadow:0 8px 25px rgba(212,175,55,0.35);
+    transition:all 0.3s ease;
+  "
+  onmouseover="this.style.transform='translateY(-2px)'"
+  onmouseout="this.style.transform='translateY(0)'"
+>
+<span id="backHomeText">⬅ Back to Home</span>
+</a>
+
+<h1 id="pageTitle">Personalized Questions</h1>
+
+  <select id="languageSelect" style="
+  padding:8px 14px;
+  border-radius:20px;
+  border:1px solid #D4AF37;
+  font-weight:700;
+  background:#fff;
+  color:#033A35;
+">
+  <option value="en">EN</option>
+  <option value="ar">AR</option>
+  <option value="fr">FR</option>
+</select>
+
 </header>
 
 <!-- MAIN -->
 <main class="personalized-page-wrapper">
 
-  <!-- IMPORTANT: SAME ID YOUR JS EXPECTS -->
   <section id="personalized" class="content-section active">
 
     <div class="personalized-card">
 
       <div class="results-header">
-        <h2>Your Personal Reflection Space</h2>
-        <p>
+        <h2 id="headerTitle">Your Personal Reflection Space</h2>
+        <p id="headerDesc">
           This is a private space to reflect, ask, and explore your thoughts.
           Samiha will personally review and respond to your questions.
         </p>
       </div>
 
       <!-- Gentle coaching message -->
-      <div class="reflection-box">
+      <div id="reflectionBox" class="reflection-box">
         “Growth begins when we allow ourselves to ask honest questions —
         even the ones we don’t yet have answers to.”
       </div>
 
-      <!-- SAME ELEMENTS USED IN DASHBOARD -->
       <div class="question-input">
 
         <textarea
@@ -155,6 +201,7 @@
           <span id="dashboardCharCount" class="char-count">0 / 700</span>
 
           <button
+            id="sendBtn"
             class="send-btn"
             onclick="submitDashboardSamihaQuestion()">
             Send to Samiha
@@ -181,11 +228,8 @@
 <!-- Cognito helpers -->
 <script src="js/cognito-config.js"></script>
 
-<!-- Personalized questions logic -->
-<script src="js/personalized-questions.js"></script>
-
-<!-- Shared helpers -->
-<script src="js/dashboard-samiha.js"></script>
+<!-- Combined logic and translations -->
+<script src="js/user-questions-samiha.js"></script>
 
 </body>
 </html>
