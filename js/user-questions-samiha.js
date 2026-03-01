@@ -1,183 +1,217 @@
-    /* =========================================================
-   USER DASHBOARD - QUESTIONS FOR SAMIHA
-   - GET /questions-for-samiha (all)
-   - Filter by logged-in user_id (Cognito sub)
-   - Show Pending/Answered
-   - View Answer modal
+/* =========================================================
+   USER DASHBOARD – ASK SAMIHA
+   - 700 char limit
+   - Logged-in users only
+   - POST question with user sub and language
+   - Full translations embedded
 ========================================================= */
 
 (function () {
-    const DIRECT_ENDPOINT =
+    const DASHBOARD_API =
       "https://jej5dh7680.execute-api.me-central-1.amazonaws.com/questions-for-samiha";
   
-    function getEndpoint() {
-      if (window.ADMIN_ENV && ADMIN_ENV.API_BASE_URL) {
-        return `${ADMIN_ENV.API_BASE_URL}/questions-for-samiha`;
+    // ============================================
+    // TRANSLATIONS (All languages embedded)
+    // ============================================
+    const translations = {
+      en: {
+        backHome: "⬅ Back to Home",
+        pageTitle: "Personalized Questions",
+        headerTitle: "Your Personal Reflection Space",
+        headerDesc: "This is a private space to reflect, ask, and explore your thoughts. Samiha will personally review and respond to your questions.",
+        reflectionBox: "“Growth begins when we allow ourselves to ask honest questions — even the ones we don’t yet have answers to.”",
+        placeholder: "Write your question to Samiha here… (max 700 characters)",
+        sendBtn: "Send to Samiha",
+        sending: "Sending your question...",
+        success: "✅ Your question has been sent to Samiha.",
+        failed: "❌ Failed to send question. Please try again.",
+        writeFirst: "Please write your question first.",
+        loginRequired: "Please login to ask Samiha a question."
+      },
+      ar: {
+        backHome: "⬅ العودة إلى الرئيسية",
+        pageTitle: "أسئلة مخصصة",
+        headerTitle: "مساحة التأمل الخاصة بك",
+        headerDesc: "هذه مساحة خاصة للتأمل والسؤال واستكشاف أفكارك. ستقوم سميحة بمراجعة أسئلتك والرد عليها شخصياً.",
+        reflectionBox: "“يبدأ النمو عندما نسمح لأنفسنا بطرح أسئلة صادقة — حتى تلك التي لا نملك إجابات لها بعد.”",
+        placeholder: "اكتب سؤالك لسميحة هنا... (بحد أقصى 700 حرف)",
+        sendBtn: "إرسال إلى سميحة",
+        sending: "جاري إرسال سؤالك...",
+        success: "✅ تم إرسال سؤالك إلى سميحة.",
+        failed: "❌ فشل إرسال السؤال. يرجى المحاولة مرة أخرى.",
+        writeFirst: "يرجى كتابة سؤالك أولاً.",
+        loginRequired: "يرجى تسجيل الدخول لطرح سؤال على سميحة."
+      },
+      fr: {
+        backHome: "⬅ Retour à l'Accueil",
+        pageTitle: "Questions Personnalisées",
+        headerTitle: "Votre Espace de Réflexion Personnel",
+        headerDesc: "C'est un espace privé pour réfléchir, poser des questions et explorer vos pensées. Samiha examinera personnellement vos questions et y répondra.",
+        reflectionBox: "« La croissance commence lorsque nous nous autorisons à poser des questions honnêtes — même celles auxquelles nous n'avons pas encore de réponses. »",
+        placeholder: "Écrivez votre question à Samiha ici... (max 700 caractères)",
+        sendBtn: "Envoyer à Samiha",
+        sending: "Envoi de votre question...",
+        success: "« Votre question a été envoyée à Samiha. »",
+        failed: "« Échec de l'envoi de la question. Veuillez réessayer. »",
+        writeFirst: "Veuillez d'abord écrire votre question.",
+        loginRequired: "Veuillez vous connecter pour poser une question à Samiha."
       }
-      return DIRECT_ENDPOINT;
-    }
+    };
+  
+    let currentLanguage = 'en'; // Track current language
   
     function el(id) {
       return document.getElementById(id);
     }
   
-    function openModal(questionText, answerText) {
-      el("userSamihaModalQuestion").textContent = questionText || "";
-      el("userSamihaModalAnswer").textContent = answerText || "";
-      el("userSamihaAnswerModal").style.display = "flex";
+    function t(key) {
+      if (translations[currentLanguage] && translations[currentLanguage][key]) {
+        return translations[currentLanguage][key];
+      }
+      if (translations.en && translations.en[key]) {
+        return translations.en[key];
+      }
+      return key;
     }
   
-    function closeModal() {
-      el("userSamihaAnswerModal").style.display = "none";
+    function applyTranslations() {
+      const backHomeText = el("backHomeText");
+      if (backHomeText) backHomeText.textContent = t("backHome");
+      
+      const pageTitle = el("pageTitle");
+      if (pageTitle) pageTitle.textContent = t("pageTitle");
+      
+      const headerTitle = el("headerTitle");
+      if (headerTitle) headerTitle.textContent = t("headerTitle");
+      
+      const headerDesc = el("headerDesc");
+      if (headerDesc) headerDesc.textContent = t("headerDesc");
+      
+      const reflectionBox = el("reflectionBox");
+      if (reflectionBox) reflectionBox.textContent = t("reflectionBox");
+      
+      const input = el("dashboardSamihaQuestion");
+      if (input) input.placeholder = t("placeholder");
+      
+      const sendBtn = el("sendBtn");
+      if (sendBtn) sendBtn.textContent = t("sendBtn");
+      
+      // Handle RTL for Arabic
+      const htmlElement = document.querySelector('html');
+      if (currentLanguage === 'ar') {
+        htmlElement.setAttribute('dir', 'rtl');
+        document.body.classList.add('rtl');
+      } else {
+        htmlElement.setAttribute('dir', 'ltr');
+        document.body.classList.remove('rtl');
+      }
+      
+      // Update language select
+      const select = el("languageSelect");
+      if (select) {
+        select.value = currentLanguage;
+      }
+      
+      // Save to localStorage
+      localStorage.setItem("selectedLanguage", currentLanguage);
     }
   
-    function renderCards(items) {
-      const list = el("userSamihaList");
-      list.innerHTML = "";
-  
-      items.forEach((q) => {
-        const answered = !!q.answer;
-  
-        const card = document.createElement("div");
-        card.style.background = "#fff";
-        card.style.border = "1px solid #eee";
-        card.style.borderRadius = "12px";
-        card.style.padding = "14px";
-        card.style.boxShadow = "0 2px 8px rgba(0,0,0,0.06)";
-        card.style.display = "flex";
-        card.style.flexDirection = "column";
-        card.style.justifyContent = "space-between";
-        card.style.gap = "10px";
-  
-        const badge = answered
-          ? `<span style="display:inline-block;background:#e9f7ef;color:#1e7e34;border:1px solid #ccebd8;padding:4px 8px;border-radius:999px;font-size:12px;">
-               Answered
-             </span>`
-          : `<span style="display:inline-block;background:#f8f9fa;color:#666;border:1px solid #eee;padding:4px 8px;border-radius:999px;font-size:12px;">
-               Pending
-             </span>`;
-  
-        card.innerHTML = `
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
-            <div style="font-weight:700;color:#8B7355;">#${q.id}</div>
-            ${badge}
-          </div>
-  
-          <div style="color:#333;font-size:14px;line-height:1.45;">
-            ${q.question || ""}
-          </div>
-  
-          <div style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
-            <button class="user-view-answer-btn"
-                    data-q="${encodeURIComponent(q.question || "")}"
-                    data-a="${encodeURIComponent(q.answer || "")}"
-                    style="flex:1;min-width:140px;border:none;border-radius:10px;padding:10px 12px;cursor:pointer;font-weight:700;
-                           background:${answered ? "#8B7355" : "#eee"};
-                           color:${answered ? "#fff" : "#999"};"
-                    ${answered ? "" : "disabled"}>
-              View Answer
-            </button>
-  
-            <span style="font-size:12px;color:#777;">
-              ${answered ? "Tap to read" : "Not answered yet"}
-            </span>
-          </div>
-        `;
-  
-        list.appendChild(card);
-      });
-  
-      document.querySelectorAll(".user-view-answer-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const qText = decodeURIComponent(btn.getAttribute("data-q") || "");
-          const aText = decodeURIComponent(btn.getAttribute("data-a") || "");
-          openModal(qText, aText);
-        });
-      });
-    }
-  
-    async function loadUserQuestions() {
-      const status = el("userSamihaStatus");
-      const list = el("userSamihaList");
-  
-      status.textContent = "Loading...";
-      list.innerHTML = "";
-  
-      // 1) Check login
-      let userId = null;
+    /* ===============================
+       GET LOGGED USER SUB
+    ================================ */
+    async function getDashboardUserSub() {
       try {
         const sessionInfo = await CognitoAuth.getCurrentSession();
-        if (!sessionInfo || !sessionInfo.session || !sessionInfo.session.isValid()) {
-          status.innerHTML = `
-            Please login to see your questions.
-            <br><br>
-            <a href="login.html" style="display:inline-block;background:#8B7355;color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700;">
-              Go to Login
-            </a>
-          `;
-          return;
+        if (
+          !sessionInfo ||
+          !sessionInfo.session ||
+          !sessionInfo.session.isValid()
+        ) {
+          return null;
         }
-        userId = sessionInfo.session.getIdToken().payload.sub;
-      } catch (e) {
-        console.error("Cognito session error:", e);
-        status.textContent = "Login session error. Please login again.";
+        return sessionInfo.session.getIdToken().payload.sub;
+      } catch (err) {
+        return null;
+      }
+    }
+  
+    /* ===============================
+       SUBMIT QUESTION
+    ================================ */
+    window.submitDashboardSamihaQuestion = async function() {
+      const input = el("dashboardSamihaQuestion");
+      const statusEl = el("dashboardSamihaStatus");
+  
+      const questionText = input.value.trim();
+      if (!questionText) {
+        statusEl.textContent = t("writeFirst");
         return;
       }
   
-      // 2) Fetch all questions
+      const userSub = await getDashboardUserSub();
+      if (!userSub) {
+        alert(t("loginRequired"));
+        window.location.href = "login.html";
+        return;
+      }
+  
+      statusEl.textContent = t("sending");
+  
       try {
-        const res = await fetch(getEndpoint(), {
-          method: "GET",
-          headers: { "Content-Type": "application/json" }
+        const res = await fetch(DASHBOARD_API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userSub,
+            question: questionText,
+            language: currentLanguage // Include the selected language filter
+          })
         });
   
         if (!res.ok) {
-          const txt = await res.text().catch(() => "");
-          throw new Error(txt || `Failed to load (HTTP ${res.status})`);
+          const txt = await res.text();
+          throw new Error(txt || "Failed to send");
         }
   
-        const data = await res.json();
-        const all = Array.isArray(data) ? data : (data.questions || []);
-  
-        // 3) Filter by this user only
-        const mine = all.filter((q) => q.user_id === userId);
-  
-        if (!mine.length) {
-          status.textContent = "You haven’t asked any questions yet.";
-          return;
-        }
-  
-        status.textContent = "";
-        renderCards(mine);
+        input.value = "";
+        const counter = el("dashboardCharCount");
+        if (counter) counter.textContent = "0 / 700";
+        statusEl.textContent = t("success");
   
       } catch (err) {
-        console.error("Load questions error:", err);
-        status.textContent = "Failed to load questions. Check console.";
+        console.error(err);
+        statusEl.textContent = t("failed");
       }
-    }
+    };
   
-    function wireModal() {
-      const modal = el("userSamihaAnswerModal");
-      const closeBtn = el("closeUserSamihaAnswerModalBtn");
-  
-      if (closeBtn) closeBtn.addEventListener("click", closeModal);
-  
-      if (modal) {
-        modal.addEventListener("click", (e) => {
-          if (e.target === modal) closeModal();
+    function setupLanguageListener() {
+      const select = el("languageSelect");
+      if (select) {
+        select.addEventListener("change", (event) => {
+          currentLanguage = event.target.value;
+          applyTranslations();
         });
       }
     }
   
-    function wireRefresh() {
-      const btn = el("reloadUserSamihaBtn");
-      if (btn) btn.addEventListener("click", loadUserQuestions);
+    function setupCharCount() {
+      const input = el("dashboardSamihaQuestion");
+      const counter = el("dashboardCharCount");
+      if (!input || !counter) return;
+      input.addEventListener("input", () => {
+        counter.textContent = `${input.value.length} / 700`;
+      });
+    }
+  
+    function updateCurrentLanguage() {
+      const savedLang = localStorage.getItem("selectedLanguage") || "en";
+      currentLanguage = savedLang;
     }
   
     document.addEventListener("DOMContentLoaded", () => {
-      wireModal();
-      wireRefresh();
-      loadUserQuestions();
+      updateCurrentLanguage();
+      applyTranslations();
+      setupLanguageListener();
+      setupCharCount();
     });
   })();
-  
