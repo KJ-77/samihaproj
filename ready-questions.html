@@ -15,21 +15,21 @@
   <!-- PAGE POLISH -->
   <style>
     body {
-      background: #f6f4f1;
-      font-family: "Lato", sans-serif;
+      background: #033A35;
     }
 
     .page-wrapper {
-      max-width: 1000px;
+      max-width: 920px;
       margin: 40px auto;
       padding: 0 16px;
     }
 
     .content-card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 32px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: none;
+      border: none;
     }
 
     .results-header h2 {
@@ -168,8 +168,50 @@
 
 <!-- HEADER -->
 <header class="dashboard-header">
-  <a href="index.html" class="btn-secondary">⬅ Back to Home</a>
-  <h1>Ready Questions</h1>
+<a id="backHomeBtn"
+  href="index.html"
+  style="
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 28px;
+    border-radius:35px;
+    font-weight:800;
+    text-decoration:none;
+    color:#033A35;
+    background:linear-gradient(
+      135deg,
+      #fff4c2,
+      #f4d35e,
+      #d4af37,
+      #c9a227,
+      #fff4c2
+    );
+    box-shadow:0 8px 25px rgba(212,175,55,0.35);
+    transition:all 0.3s ease;
+  "
+  onmouseover="this.style.transform='translateY(-2px)'"
+  onmouseout="this.style.transform='translateY(0)'">
+  
+  <span id="backHomeText">⬅ Back to Home</span>
+
+</a>
+
+<h1 id="pageTitle">Ready Questions</h1>
+
+  <select id="languageSelect" style="
+  padding:8px 14px;
+  border-radius:20px;
+  border:1px solid #D4AF37;
+  font-weight:700;
+  background:#fff;
+  color:#033A35;
+">
+  <option value="en">EN</option>
+  <option value="ar">AR</option>
+  <option value="fr">FR</option>
+</select>
+
 </header>
 
 <!-- MAIN -->
@@ -180,17 +222,14 @@
     <div class="content-card">
 
       <div class="results-header">
-        <h2>Questions & Answers</h2>
-        <p>
-          Browse thoughtful coaching questions with ready answers from Samiha.
-          This space is designed to help you reflect, understand yourself, and gain clarity.
-        </p>
+        <h2 id="headerTitle">Ready Questions</h2>
+        <p id="headerDesc">Browse thoughtful coaching questions with ready answers from Samiha. This space is designed to help you reflect, understand yourself, and gain clarity.</p>
       </div>
 
       <div id="personalizedQuestionsWrap">
 
         <div class="library-header">
-          <h4>Your Q&A Library</h4>
+          <h4 id="libraryTitle">Your Q&A Library</h4>
           <button id="reloadPersonalizedBtn">Refresh</button>
         </div>
 
@@ -222,7 +261,7 @@
   <div class="answer-modal-card">
 
     <div class="answer-modal-header">
-      <h2>Answer</h2>
+      <h2 id="modalTitle">Answer</h2>
       <button id="closeViewAnswerModalBtn" aria-label="Close">✕</button>
     </div>
 
@@ -246,4 +285,4 @@
 <script src="js/personalized-questions.js"></script>
 
 </body>
-</html>
+</html> 
